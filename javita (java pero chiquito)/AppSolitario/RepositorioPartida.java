@@ -39,11 +39,13 @@ public class RepositorioPartida {
         int i = 1;
         for (List<Carta> columna : columnas) {
             if (!columna.isEmpty()) {
-                i++;
                 cartasVisibles += "Columna: " + String.valueOf(i) + columna.getLast().toString() + "\n";
+                i++;
             }
         }
-        cartasVisibles += cartasUsables.getLast().toString();
+        if (!cartasUsables.isEmpty()) {
+            cartasVisibles += cartasUsables.getLast().toString();
+        }
         return cartasVisibles;
     }
 }
