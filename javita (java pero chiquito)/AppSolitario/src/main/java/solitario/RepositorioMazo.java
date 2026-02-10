@@ -8,7 +8,7 @@ import java.util.Collections;
 public class RepositorioMazo implements Iterable<Carta> {
     public RepositorioMazo() {
         this.mazo = new ArrayList<>(); // capaz en un futuro cambiar a diccionario
-
+        cargarMazo();
     }
 
     private List<Carta> mazo;
@@ -23,6 +23,7 @@ public class RepositorioMazo implements Iterable<Carta> {
                 }
             }
         }
+        shuffle();
     }
 
     public Iterator<Carta> iterator() {
@@ -32,6 +33,7 @@ public class RepositorioMazo implements Iterable<Carta> {
     public void resetearMazo() {
         mazo.clear();
         cargarMazo();
+        shuffle();
     }
 
     public List<Carta> getMazo() {

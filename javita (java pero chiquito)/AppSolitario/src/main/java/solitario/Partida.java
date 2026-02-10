@@ -1,8 +1,10 @@
+package solitario;
+
 import java.util.List;
 import java.util.ArrayList;
 
-public class RepositorioPartida {
-    public RepositorioPartida(RepositorioMazo mazo) {
+public class Partida {
+    public Partida(RepositorioMazo mazo) {
         this.columnas = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             columnas.add(new ArrayList<>());
@@ -31,7 +33,12 @@ public class RepositorioPartida {
     }
 
     public void drawOne() {
-        cartasUsables.add(repositorioMazo.drawOne());
+        if (repositorioMazo.drawOne() != null) {
+            cartasUsables.add(repositorioMazo.drawOne());
+        } else {
+            System.out.println("No hay mas cartas en el mazo!!!");
+        }
+
     }
 
     public String verCartas() {
@@ -39,13 +46,11 @@ public class RepositorioPartida {
         int i = 1;
         for (List<Carta> columna : columnas) {
             if (!columna.isEmpty()) {
-                cartasVisibles += "Columna: " + String.valueOf(i) + columna.getLast().toString() + "\n";
                 i++;
+                cartasVisibles += "Columna: " + String.valueOf(i) + columna.getLast().toString() + "\n";
             }
         }
-        if (!cartasUsables.isEmpty()) {
-            cartasVisibles += cartasUsables.getLast().toString();
-        }
+        cartasVisibles += cartasUsables.getLast().toString();
         return cartasVisibles;
     }
 }
