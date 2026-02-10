@@ -1,3 +1,5 @@
+package ignacio;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,8 +35,7 @@ public class RepositorioSesiones implements Iterable<SesionEntrenamiento> {
     // que el ==)
 
     public List<SesionEntrenamiento> obtenerSesionesTerreno(String tipoTerreno) {
-        Stream<SesionEntrenamiento> sesionesStream = sesiones.stream();
-        return sesionesStream.filter(s -> s.getTerreno().equalsIgnoreCase(tipoTerreno)).toList();
+        return sesiones.stream().filter(s -> s.getTerreno().equalsIgnoreCase(tipoTerreno)).toList();
 
         // sesiones.stream().filter(s ->
         // s.getTerreno().equalsIgnoreCase(tipoTerreno).toList()) es lo mismo que lo de

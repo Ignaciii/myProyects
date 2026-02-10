@@ -1,3 +1,5 @@
+package ignacio;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Iterator;

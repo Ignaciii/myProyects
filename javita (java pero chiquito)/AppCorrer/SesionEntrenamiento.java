@@ -1,3 +1,5 @@
+package ignacio;
+
 public class SesionEntrenamiento {
     public SesionEntrenamiento(int sesion, String terreno, Double distancia, Double duracionTotal, int intervalosIda,
             int intervalosVuelta, Double tiempoTroteIda, Double tiempoCaminataIda, Double tiempoTroteVuelta,
