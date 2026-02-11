@@ -17,9 +17,12 @@ public class RepositorioMazo implements Iterable<Carta> {
         if (mazo.isEmpty()) {
             String[] colores = { "Diamantes", "Treboles", "Corazones", "Picas" };
             String[] valores = { "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+
+            // el j + 1 es para manejar de forma mas facil el ordenamiento en los mazos
+            // solucion
             for (int i = 0; i < colores.length; i++) {
                 for (int j = 0; j < valores.length; j++) {
-                    mazo.add(new Carta(colores[i], valores[j]));
+                    mazo.add(new Carta(colores[i], valores[j], j + 1));
                 }
             }
         }

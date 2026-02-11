@@ -17,7 +17,7 @@ public class Partida {
     private List<List<Carta>> columnas;
     private List<Carta> cartasUsables;
 
-    public void llenarColumna(int cantidad) {
+    public void llenarColumna() {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j <= i; j++)
                 columnas.get(i).add(repositorioMazo.sacarCarta());
@@ -52,5 +52,23 @@ public class Partida {
         }
         cartasVisibles += cartasUsables.getLast().toString();
         return cartasVisibles;
+    }
+
+    public void reiniciarPartida() {
+        repositorioMazo.cargarMazo();
+        columnas.clear();
+        llenarColumna();
+    }
+
+    // deberia poder: sacar una carta de una columna (no se pueden tener mas de 1 en
+    // la mano en cualquier momento)
+    public void sacarDeColumna() {
+
+    }
+
+    // deberia poder agregar una carta a una columna o al mazo resuelto segun
+    // corresponda, analizar caso de columna vacia, y caso del As
+    public void agregarAColumna() {
+
     }
 }
