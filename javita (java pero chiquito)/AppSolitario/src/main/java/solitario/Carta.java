@@ -5,25 +5,27 @@ public class Carta {
     public Carta() {
     }
 
-    public Carta(String color, String valor, int numero) {
-        this.color = color;
+    public Carta(String palo, String valor, int numero, String color) {
+        this.palo = palo;
         this.valor = valor;
         this.visible = false;
+        this.color = color;
 
         this.numero = numero;
     }
 
-    private String color;
+    private String palo;
     private String valor;
     private Boolean visible;
     private int numero;
+    private String color;
 
     public void darVuelta() {
         visible = true;
     }
 
-    public String getColor() {
-        return color;
+    public String getPalo() {
+        return palo;
     }
 
     public String getValor() {
@@ -38,9 +40,13 @@ public class Carta {
         return visible;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public String toString() {
         if (visible) {
-            return ",color: " + color + ", valor: " + valor;
+            return ",palo: " + palo + ", valor: " + valor;
         }
         return "invisible";
     }

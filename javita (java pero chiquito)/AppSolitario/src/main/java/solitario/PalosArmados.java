@@ -23,9 +23,10 @@ public class PalosArmados {
     // este metodo deberia permitir agregar una carta de las posibles es decir una
     // de las columnas, o de las visibles del mazo
     public void agregarCartaSolucion(Carta carta) {
-        String color = carta.getColor();
+        String palo = carta.getPalo();
         Boolean resultado;
-        switch (color) {
+
+        switch (palo) {
 
             case "Corazones":
                 resultado = validarCartaConSolucion(carta, corazones);
@@ -69,12 +70,10 @@ public class PalosArmados {
     // retorna si es o no valida la operacion
     public Boolean validarCartaConSolucion(Carta carta, List<Carta> lista) {
 
-        int numero = carta.getNumero();
-
-        if (numero == 1) {
+        if (carta.getNumero() == 1) {
             return true;
 
-        } else if (numero == lista.getLast().getNumero() + 1) {
+        } else if (carta.getNumero() == lista.getLast().getNumero() + 1) {
             return true;
         }
 
