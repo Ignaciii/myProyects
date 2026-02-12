@@ -1,69 +1,43 @@
 package solitario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PalosArmados {
     public PalosArmados() {
-        // TODO: estos van en el diccionario
-        this.corazones = new ArrayList<>();
-        this.treboles = new ArrayList<>();
-        this.diamantes = new ArrayList<>();
-        this.picas = new ArrayList<>();
 
+        this.palosArmados = new HashMap<>();
+        inicializarMap();
     }
 
-    private List<Carta> corazones;
-    private List<Carta> treboles;
-    private List<Carta> diamantes;
-    private List<Carta> picas;
+    private Map<String, List<Carta>> palosArmados;
+
+    public void inicializarMap() {
+
+        palosArmados.put("Corazones", new ArrayList<Carta>());
+        palosArmados.put("Diamantes", new ArrayList<Carta>());
+        palosArmados.put("Picas", new ArrayList<Carta>());
+        palosArmados.put("Treboles", new ArrayList<Carta>());
+    }
 
     public void agregarCartaSolucion(Carta carta) {
         String palo = carta.getPalo();
-        Boolean resultado;
 
-        // TODO: hacer volar esto de aca meter un diccionario y listo donde la clave sea
-        // el nombre del palo y el valor las lista de cartas
-        switch (palo) {
-
-            case "Corazones":
-                resultado = validarCartaConSolucion(carta, corazones);
-                if (resultado) {
-                    corazones.add(carta);
-                } else {
-                    System.out.println("Jugada invalida, no se puede agregar esa carta ahi !!");
-                }
-                break;
-
-            case "Diamantes":
-                resultado = validarCartaConSolucion(carta, diamantes);
-                if (resultado) {
-                    diamantes.add(carta);
-                } else {
-                    System.out.println("Jugada invalida, no se puede agregar esa carta ahi !!");
-                }
-                break;
-
-            case "Treboles":
-                resultado = validarCartaConSolucion(carta, treboles);
-                if (resultado) {
-                    treboles.add(carta);
-                } else {
-                    System.out.println("Jugada invalida, no se puede agregar esa carta ahi !!");
-                }
-                break;
-
-            case "Picas":
-                resultado = validarCartaConSolucion(carta, picas);
-                if (resultado) {
-                    picas.add(carta);
-                } else {
-                    System.out.println("Jugada invalida, no se puede agregar esa carta ahi !!");
-                }
-                break;
-
+        if (palosArmados.containsKey(palo)) {
+            if (validarCartaConSolucion(carta, palosArmados.get(palo))) {
+                palosArmados.get(palo).add(carta);
+                System.out.println("Jugada realizada");
+            } else {
+                System.out.println("Jugada invalida, no se puede agregar esa carta alli");
+            }
+        } else {
+            System.out.println("El palo de esa carta no lo conozco!!!");
         }
     }
+
+    // DONE: fijarse como cambiar esto para que funcione con el mapa
 
     public Boolean validarCartaConSolucion(Carta carta, List<Carta> lista) {
 
@@ -81,10 +55,8 @@ public class PalosArmados {
     }
 
     public void resetear() {
-        corazones.clear();
-        treboles.clear();
-        diamantes.clear();
-        picas.clear();
+        palosArmados.values().forEach(lista -> lista.clear());
+
     }
 
 }

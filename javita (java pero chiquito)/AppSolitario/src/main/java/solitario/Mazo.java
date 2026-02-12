@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.Collections;
 
-public class RepositorioMazo implements Iterable<Carta> {
-    public RepositorioMazo() {
+public class Mazo implements Iterable<Carta> {
+    public Mazo() {
         this.mazo = new ArrayList<>(); // capaz en un futuro cambiar a diccionario
         cargarMazo();
     }

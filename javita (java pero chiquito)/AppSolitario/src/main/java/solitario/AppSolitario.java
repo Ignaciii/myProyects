@@ -8,9 +8,9 @@ public class AppSolitario {
         int opcion = -1;
         menuOpciones();
         // este creo que puedo ponerlo directamente en el repoPartida
-        RepositorioMazo repoMazo = new RepositorioMazo();
+        Mazo mazo = new Mazo();
         PalosArmados palosArmados = new PalosArmados();
-        Partida partida = new Partida(repoMazo, palosArmados);
+        Partida partida = new Partida(mazo, palosArmados);
 
         partida.llenarColumna();
         partida.marcarCartaArriba();

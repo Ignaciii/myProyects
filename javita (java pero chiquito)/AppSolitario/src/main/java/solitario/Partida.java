@@ -4,17 +4,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Partida {
-    public Partida(RepositorioMazo mazo, PalosArmados palosArmados) {
+
+    // TODO: cambiar el constructor, ya no son listas las columnas sino objetos
+    public Partida(Mazo mazo, PalosArmados palosArmados) {
         this.columnas = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             columnas.add(new ArrayList<>());
         }
-        this.repositorioMazo = mazo;
+        this.mazo = mazo;
         this.cartasUsables = new ArrayList<>();
         this.palosArmados = palosArmados;
     }
 
-    private RepositorioMazo repositorioMazo;
+    // aca tambien
+    private Mazo mazo;
     private List<List<Carta>> columnas;
     private List<Carta> cartasUsables;
     private PalosArmados palosArmados;
@@ -22,14 +25,14 @@ public class Partida {
     public void llenarColumna() {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j <= i; j++)
-                columnas.get(i).add(repositorioMazo.sacarCarta());
+                columnas.get(i).add(mazo.sacarCarta());
 
         }
     }
 
     public void drawOne() {
-        if (repositorioMazo.drawOne() != null) {
-            cartasUsables.add(repositorioMazo.drawOne());
+        if (mazo.drawOne() != null) {
+            cartasUsables.add(mazo.drawOne());
         } else {
             System.out.println("No hay mas cartas en el mazo!!!");
         }
@@ -38,7 +41,7 @@ public class Partida {
 
     public void reiniciarPartida() {
 
-        repositorioMazo.resetear();
+        mazo.resetear();
         palosArmados.resetear();
 
         columnas.clear();
