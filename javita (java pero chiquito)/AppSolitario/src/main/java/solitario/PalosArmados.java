@@ -37,8 +37,6 @@ public class PalosArmados {
         }
     }
 
-    // DONE: fijarse como cambiar esto para que funcione con el mapa
-
     public Boolean validarCartaConSolucion(Carta carta, List<Carta> lista) {
 
         if (carta.getNumero() == 1) {
@@ -46,17 +44,13 @@ public class PalosArmados {
 
         } else if (carta.getNumero() == lista.getLast().getNumero() + 1) {
             return true;
-        }
-
-        else {
+        } else {
             return false;
         }
-
     }
 
     public void resetear() {
         palosArmados.values().forEach(lista -> lista.clear());
-
     }
 
 }
