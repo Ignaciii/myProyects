@@ -38,7 +38,7 @@ public class RepositorioMazo implements Iterable<Carta> {
         return mazo.iterator();
     }
 
-    public void resetearMazo() {
+    public void resetear() {
         mazo.clear();
         cargarMazo();
         shuffle();

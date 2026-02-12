@@ -3,9 +3,9 @@ package solitario;
 import java.util.ArrayList;
 import java.util.List;
 
-//este va a contener los 4 palos de la solucion 
 public class PalosArmados {
     public PalosArmados() {
+        // TODO: estos van en el diccionario
         this.corazones = new ArrayList<>();
         this.treboles = new ArrayList<>();
         this.diamantes = new ArrayList<>();
@@ -18,14 +18,12 @@ public class PalosArmados {
     private List<Carta> diamantes;
     private List<Carta> picas;
 
-    // Todo: chequear que la carta se condiga con el palo de la lista de solucion
-    // ademas que sea el valor correcto
-    // este metodo deberia permitir agregar una carta de las posibles es decir una
-    // de las columnas, o de las visibles del mazo
     public void agregarCartaSolucion(Carta carta) {
         String palo = carta.getPalo();
         Boolean resultado;
 
+        // TODO: hacer volar esto de aca meter un diccionario y listo donde la clave sea
+        // el nombre del palo y el valor las lista de cartas
         switch (palo) {
 
             case "Corazones":
@@ -67,7 +65,6 @@ public class PalosArmados {
         }
     }
 
-    // retorna si es o no valida la operacion
     public Boolean validarCartaConSolucion(Carta carta, List<Carta> lista) {
 
         if (carta.getNumero() == 1) {
@@ -81,6 +78,13 @@ public class PalosArmados {
             return false;
         }
 
+    }
+
+    public void resetear() {
+        corazones.clear();
+        treboles.clear();
+        diamantes.clear();
+        picas.clear();
     }
 
 }

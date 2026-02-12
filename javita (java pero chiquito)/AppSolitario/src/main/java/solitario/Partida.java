@@ -4,31 +4,26 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Partida {
-    public Partida(RepositorioMazo mazo) {
+    public Partida(RepositorioMazo mazo, PalosArmados palosArmados) {
         this.columnas = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             columnas.add(new ArrayList<>());
         }
         this.repositorioMazo = mazo;
         this.cartasUsables = new ArrayList<>();
+        this.palosArmados = palosArmados;
     }
 
     private RepositorioMazo repositorioMazo;
     private List<List<Carta>> columnas;
     private List<Carta> cartasUsables;
+    private PalosArmados palosArmados;
 
     public void llenarColumna() {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j <= i; j++)
                 columnas.get(i).add(repositorioMazo.sacarCarta());
 
-        }
-    }
-
-    public void marcarCartaArriba() {
-        for (List<Carta> columna : columnas) {
-            if (!columna.isEmpty())
-                columna.get(columna.size() - 1).darVuelta();
         }
     }
 
@@ -41,6 +36,25 @@ public class Partida {
 
     }
 
+    public void reiniciarPartida() {
+
+        repositorioMazo.resetear();
+        palosArmados.resetear();
+
+        columnas.clear();
+        llenarColumna();
+        System.out.println("Partida reinicida!!!");
+    }
+
+    // TODO: todas estas funciones van a ir en la clase nueva llamada columna
+
+    public void marcarCartaArriba() {
+        for (List<Carta> columna : columnas) {
+            if (!columna.isEmpty())
+                columna.get(columna.size() - 1).darVuelta();
+        }
+    }
+
     public String verCartas() {
         String cartasVisibles = "";
         int i = 1;
@@ -50,18 +64,13 @@ public class Partida {
                 cartasVisibles += "Columna: " + String.valueOf(i) + columna.getLast().toString() + "\n";
             }
         }
-        cartasVisibles += cartasUsables.getLast().toString();
+        if (!cartasUsables.isEmpty()) {
+            cartasVisibles += "La ultima carta robada usable es: " + cartasUsables.getLast().toString();
+        }
+
         return cartasVisibles;
     }
 
-    public void reiniciarPartida() {
-        repositorioMazo.cargarMazo();
-        columnas.clear();
-        llenarColumna();
-    }
-
-    // deberia poder: sacar una carta de una columna (no se pueden tener mas de 1 en
-    // la mano en cualquier momento)
     public Carta sacarDeColumna(int columna) {
         if (columna > 0 && columna < 8) {
             Carta carta = columnas.get(columna).getLast();
@@ -71,9 +80,6 @@ public class Partida {
             return null;
         }
     }
-
-    // deberia poder agregar una carta a una columna o al mazo resuelto segun
-    // corresponda
 
     public void agregarAColumnaDeColumna(Carta carta, int columna) {
         if (validarCarta(carta, columna)) {
