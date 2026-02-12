@@ -45,9 +45,7 @@ public class Carta {
     }
 
     public String toString() {
-        if (visible) {
-            return ",palo: " + palo + ", valor: " + valor;
-        }
-        return "invisible";
+        return valor + palo;
+
     }
 }

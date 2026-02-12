@@ -24,7 +24,15 @@ public class Columna {
     public String verCartas() {
 
         if (!elementos.isEmpty()) {
-            return "Columna " + numeroDeColumna + elementos.getLast().toString() + "\n";
+            String str = "";
+            for (Carta e : elementos) {
+                if (e.visible()) {
+                    str += e.toString() + " ";
+                } else {
+                    str += "X ";
+                }
+            }
+            return "Columna " + numeroDeColumna + str + "\n";
         } else
             return "Columna " + numeroDeColumna + " vacia.\n";
     }
@@ -33,6 +41,9 @@ public class Columna {
         if (!elementos.isEmpty()) {
             Carta carta = elementos.getLast();
             elementos.removeLast();
+            if (!elementos.isEmpty()) {
+                elementos.getLast().darVuelta();
+            }
             return carta;
         } else
             return null;
@@ -61,6 +72,10 @@ public class Columna {
             return false;
         }
 
+    }
+
+    public void llenarColumna(Carta carta) {
+        elementos.add(carta);
     }
 
 }

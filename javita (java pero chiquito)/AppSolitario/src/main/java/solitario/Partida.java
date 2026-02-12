@@ -15,7 +15,6 @@ public class Partida {
         this.palosArmados = palosArmados;
     }
 
-    // aca tambien
     private Mazo mazo;
     private List<Columna> columnas;
     private List<Carta> cartasUsables;
@@ -23,14 +22,19 @@ public class Partida {
 
     public void llenarColumna() {
         for (int i = 0; i < 7; i++) {
-            for (int j = 0; j <= i; j++)
-                columnas.get(i).getElementos().add(mazo.sacarCarta());
+            for (int j = 0; j <= i; j++) {
+                Carta carta = mazo.drawOne();
+                columnas.get(i).llenarColumna(carta);
 
+            }
+            columnas.get(i).marcarCartaArriba();
         }
     }
 
     public void drawOne() {
-        if (mazo.drawOne() != null) {
+        Carta carta = mazo.drawOne();
+        if (carta != null) {
+            carta.darVuelta();
             cartasUsables.add(mazo.drawOne());
         } else {
             System.out.println("No hay mas cartas en el mazo!!!");
@@ -72,14 +76,16 @@ public class Partida {
 
     public Carta sacarDeColumna(int columna) {
         if (columna > 0 && columna < 8) {
-            return columnas.get(columna).sacarDeColumna();
+            Carta carta = columnas.get(columna - 1).sacarDeColumna();
+
+            return carta;
         } else {
             return null;
         }
     }
 
     public void agregarCartaColumna(Carta carta, int columna) {
-        columnas.get(columna).agregarCartaColumna(carta);
+        columnas.get(columna - 1).agregarCartaColumna(carta);
 
     }
 

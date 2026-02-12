@@ -13,7 +13,6 @@ public class AppSolitario {
         Partida partida = new Partida(mazo, palosArmados);
 
         partida.llenarColumna();
-        partida.marcarCartaArriba();
         partida.verCartas();
 
         while (opcion != 8) {

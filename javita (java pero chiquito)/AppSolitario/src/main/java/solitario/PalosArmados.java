@@ -42,7 +42,7 @@ public class PalosArmados {
         if (carta.getNumero() == 1) {
             return true;
 
-        } else if (carta.getNumero() == lista.getLast().getNumero() + 1) {
+        } else if (!lista.isEmpty() && carta.getNumero() == lista.getLast().getNumero() + 1) {
             return true;
         } else {
             return false;

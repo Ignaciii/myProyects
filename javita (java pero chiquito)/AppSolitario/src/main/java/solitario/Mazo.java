@@ -50,13 +50,6 @@ public class Mazo implements Iterable<Carta> {
         return mazo.stream().toList();
     }
 
-    public Carta sacarCarta() {
-        Carta carta = mazo.getLast();
-        mazo.removeLast();
-        return carta;
-
-    }
-
     public void shuffle() {
         Collections.shuffle(mazo);
     }
@@ -65,7 +58,6 @@ public class Mazo implements Iterable<Carta> {
         if (!mazo.isEmpty()) {
             Carta cartaRobada = mazo.getLast();
             mazo.removeLast();
-            cartaRobada.darVuelta();
             return cartaRobada;
         } else {
             return null;
