@@ -89,4 +89,17 @@ public class Partida {
 
     }
 
+    public Carta usarCartaRobada() {
+        if (!cartasUsables.isEmpty()) {
+            Carta carta = cartasUsables.getLast();
+            cartasUsables.removeLast();
+            return carta;
+        }
+        return null;
+    }
+
+    public void agregarCartaSolucion(Carta carta) {
+        palosArmados.agregarCartaSolucion(carta);
+    }
+
 }
