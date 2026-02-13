@@ -68,4 +68,12 @@ public class PalosArmados {
         });
     }
 
+    public int contarCartas() {
+        int cartasSolucion = 0;
+        for (List<Carta> lista : palosArmados.values()) {
+            cartasSolucion += lista.size();
+        }
+        return cartasSolucion;
+    }
+
 }

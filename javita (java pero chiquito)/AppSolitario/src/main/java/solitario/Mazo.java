@@ -22,7 +22,7 @@ public class Mazo implements Iterable<Carta> {
             // solucion
             for (int i = 0; i < palos.length; i++) {
                 for (int j = 0; j < valores.length; j++) {
-                    if (palos[i] == "Diamantes" || palos[i] == "Corazones") {
+                    if (palos[i].equals("Diamantes") || palos[i].equals("Corazones")) {
                         mazo.add(new Carta(palos[i], valores[j], j + 1, "Rojo"));
                     } else {
                         mazo.add(new Carta(palos[i], valores[j], j + 1, "Negro"));

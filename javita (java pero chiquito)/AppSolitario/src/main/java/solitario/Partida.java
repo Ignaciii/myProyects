@@ -114,4 +114,8 @@ public class Partida {
         columnas.get(columnaOrigen - 1).rollbackColumna(carta);
     }
 
+    public Boolean validarVictoria() {
+        return palosArmados.contarCartas() == 52;
+    }
+
 }

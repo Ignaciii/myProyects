@@ -75,6 +75,10 @@ public class AppSolitario {
                             if (!resultado) {
                                 rollbackColumna(carta, partida, columnaOrigen);
                             }
+                            if (validarVictoria(partida)) {
+                                System.out.println("Genio genio genio gol gol gol!!!!");
+                                System.out.println("Jugar de nuevo 1) | Salir 8)");
+                            }
                         }
 
                         else {
@@ -88,6 +92,10 @@ public class AppSolitario {
                             Boolean resultado = partida.agregarCartaSolucion(carta);
                             if (!resultado) {
                                 rollbackRobadas(carta, partida);
+                            }
+                            if (validarVictoria(partida)) {
+                                System.out.println("Genio genio genio gol gol gol!!!!");
+                                System.out.println("Jugar de nuevo 1) | Salir 8)");
                             }
                         }
                     } else {
@@ -119,7 +127,7 @@ public class AppSolitario {
         System.out.println("Opcion 2) Robar una carta del mazo.");
         System.out.println("Opcion 3) Agregar una carta en una columna.");
         System.out.println("Opcion 4) Agregar una carta a la solucion.");
-        System.out.println("Opcion 5) Ver palos armados");
+        System.out.println("Opcion 5) Ver palos armados.");
         System.out.println("Opcion 8) Salir.");
     }
 
@@ -140,6 +148,10 @@ public class AppSolitario {
 
     public static void rollbackColumna(Carta carta, Partida partida, int columnaOrigen) {
         partida.rollbackColumna(carta, columnaOrigen);
+    }
+
+    public static Boolean validarVictoria(Partida partida) {
+        return partida.validarVictoria();
     }
 
 }
