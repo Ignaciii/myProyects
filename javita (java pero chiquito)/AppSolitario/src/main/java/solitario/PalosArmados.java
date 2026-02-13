@@ -22,35 +22,50 @@ public class PalosArmados {
         palosArmados.put("Treboles", new ArrayList<Carta>());
     }
 
-    public void agregarCartaSolucion(Carta carta) {
+    public Boolean agregarCartaSolucion(Carta carta) {
         String palo = carta.getPalo();
 
         if (palosArmados.containsKey(palo)) {
             if (validarCartaConSolucion(carta, palosArmados.get(palo))) {
                 palosArmados.get(palo).add(carta);
                 System.out.println("Jugada realizada");
+                return true;
             } else {
                 System.out.println("Jugada invalida, no se puede agregar esa carta alli");
             }
         } else {
             System.out.println("El palo de esa carta no lo conozco!!!");
         }
+        return false;
     }
 
     public Boolean validarCartaConSolucion(Carta carta, List<Carta> lista) {
 
-        if (carta.getNumero() == 1) {
-            return true;
+        if (lista.isEmpty()) {
+            return carta.getNumero() == 1;
 
-        } else if (!lista.isEmpty() && carta.getNumero() == lista.getLast().getNumero() + 1) {
-            return true;
         } else {
-            return false;
+            return (!lista.isEmpty() && carta.getNumero() == lista.getLast().getNumero() + 1);
+
         }
     }
 
     public void resetear() {
         palosArmados.values().forEach(lista -> lista.clear());
+    }
+
+    public void verSolucion() {
+
+        System.out.println("--- CARTAS EN LOS PALOS ---");
+        palosArmados.forEach((palo, lista) -> {
+            System.out.print(palo + ": ");
+            if (lista.isEmpty()) {
+                System.out.println("[ VACIO ]");
+            } else {
+                // Mostramos solo la de arriba, que es la que importa en la solución
+                System.out.println("[" + lista.getLast().toString() + "]");
+            }
+        });
     }
 
 }

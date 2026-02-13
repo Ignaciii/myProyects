@@ -21,7 +21,12 @@ public class Carta {
     private String color;
 
     public void darVuelta() {
-        visible = true;
+        if (visible) {
+            visible = false;
+        } else {
+            visible = true;
+        }
+
     }
 
     public String getPalo() {

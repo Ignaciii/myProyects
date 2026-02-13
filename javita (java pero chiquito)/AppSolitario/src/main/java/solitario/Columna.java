@@ -49,11 +49,13 @@ public class Columna {
             return null;
     }
 
-    public void agregarCartaColumna(Carta carta) {
+    public Boolean agregarCartaColumna(Carta carta) {
         if (validarCarta(carta)) {
             elementos.add(carta);
+            return true;
         } else {
-            System.out.println("No se puede agregar esa carta alli!!!");
+
+            return false;
         }
     }
 
@@ -76,6 +78,16 @@ public class Columna {
 
     public void llenarColumna(Carta carta) {
         elementos.add(carta);
+    }
+
+    public void rollbackColumna(Carta carta) {
+        if (!elementos.isEmpty()) {
+            elementos.getLast().darVuelta();
+            elementos.add(carta);
+        } else {
+            elementos.add(carta);
+        }
+
     }
 
 }

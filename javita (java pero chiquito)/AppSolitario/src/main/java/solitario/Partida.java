@@ -84,8 +84,8 @@ public class Partida {
         }
     }
 
-    public void agregarCartaColumna(Carta carta, int columna) {
-        columnas.get(columna - 1).agregarCartaColumna(carta);
+    public Boolean agregarCartaColumna(Carta carta, int columna) {
+        return columnas.get(columna - 1).agregarCartaColumna(carta);
 
     }
 
@@ -98,8 +98,20 @@ public class Partida {
         return null;
     }
 
-    public void agregarCartaSolucion(Carta carta) {
-        palosArmados.agregarCartaSolucion(carta);
+    public Boolean agregarCartaSolucion(Carta carta) {
+        return palosArmados.agregarCartaSolucion(carta);
+    }
+
+    public void devolverCartaRobada(Carta carta) {
+        cartasUsables.add(carta);
+    }
+
+    public void verSolucion() {
+        palosArmados.verSolucion();
+    }
+
+    public void rollbackColumna(Carta carta, int columnaOrigen) {
+        columnas.get(columnaOrigen - 1).rollbackColumna(carta);
     }
 
 }

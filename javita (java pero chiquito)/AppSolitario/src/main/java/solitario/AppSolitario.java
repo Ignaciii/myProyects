@@ -29,72 +29,74 @@ public class AppSolitario {
                     break;
 
                 case 3:
-                    System.out.print("Escribi 1 para sacar de una columna y 2 para sacar de las disponibles: ");
+                    System.out.print("Sacamos de las columnas 1) | Sacamos de las disponibles 2): ");
                     int eleccion = sc.nextInt();
                     if (eleccion == 1) {
-                        System.out.print("Joya sacamos de una columna, ahora ingresa cual en numero: ");
-                        int columnaOrigen = sc.nextInt();
-                        if (columnaOrigen > 0 && columnaOrigen < 8) {
+                        int columnaOrigen = cargarColumnaUsuario(sc);
+                        Carta carta = partida.sacarDeColumna(columnaOrigen);
 
-                            System.out.println("Bien, ahora a que columna la agregamos: ");
-                            int columnaDestino = sc.nextInt();
+                        if (carta != null) {
+                            System.out.println("Carta seleccionada " + carta.toString());
+                            System.out.println("Bien, ahora a que columna la agregamos");
+                            int columnaDestino = cargarColumnaUsuario(sc);
 
-                            if (columnaDestino > 0 && columnaDestino < 8) {
-
-                                Carta carta = partida.sacarDeColumna(columnaOrigen);
-                                partida.agregarCartaColumna(carta, columnaDestino);
-
-                            } else {
-                                System.out
-                                        .println("Che hubo un problema, acordate que solo hay columnas de la 1 a la 7");
+                            Boolean resultado = partida.agregarCartaColumna(carta, columnaDestino);
+                            if (!resultado) {
+                                rollbackColumna(carta, partida, columnaOrigen);
                             }
-
-                        } else {
-                            System.out.println("Che hubo un problema, acordate que solo hay columnas de la 1 a la 7");
                         }
 
                     } else if (eleccion == 2) {
                         System.out.println("Joya sacamos de las disponibles");
-                        System.out.print("En que columna la agregamos: ");
-                        int columnaDestino = sc.nextInt();
-
-                        if (columnaDestino > 0 && columnaDestino < 8) {
-                            Carta carta = partida.usarCartaRobada();
-                            if (carta != null) {
-                                partida.agregarCartaColumna(carta, columnaDestino);
-                            } else {
-                                System.out.println("Che no hay cartas de esas para usar");
+                        int columnaDestino = cargarColumnaUsuario(sc);
+                        Carta carta = partida.usarCartaRobada();
+                        if (carta != null && columnaDestino != -1) {
+                            Boolean resultado = partida.agregarCartaColumna(carta, columnaDestino);
+                            if (!resultado) {
+                                rollbackRobadas(carta, partida);
                             }
+                        } else {
+                            System.out.println("Error: no se pudo cargar esa carta alli.");
                         }
+
                     } else {
                         System.out.println("Che me perdi, esa opcion no la tengo.");
                     }
 
                     break;
                 case 4:
-                    System.out.print("Dale, si es de una columna coloca 1 y si es de las usables coloca 2: ");
+                    System.out.print("Sacamos de una columna 1) | Sacamos de las usables 2): ");
                     int opcionIngresada = sc.nextInt();
                     if (opcionIngresada == 1) {
-                        System.out.print("De que columna la sacamos: ");
-                        int columnaOrigen = sc.nextInt();
-                        if (columnaOrigen > 0 && columnaOrigen < 8) {
-                            Carta carta = partida.sacarDeColumna(columnaOrigen);
-                            if (carta != null) {
-                                partida.agregarCartaSolucion(carta);
-                            } else {
-                                System.out.println("Che no habia cartas en esa columna");
+                        int columnaOrigen = cargarColumnaUsuario(sc);
+                        Carta carta = partida.sacarDeColumna(columnaOrigen);
+                        if (carta != null && columnaOrigen != -1) {
+                            Boolean resultado = partida.agregarCartaSolucion(carta);
+                            if (!resultado) {
+                                rollbackColumna(carta, partida, columnaOrigen);
                             }
+                        }
 
-                        } else {
-                            System.out.println("Upa nos pasamos de rosca con el numerito");
+                        else {
+                            System.out.println("Error: no se pudo cargar esa carta alli.");
                         }
                     }
 
                     else if (opcionIngresada == 2) {
+                        Carta carta = partida.usarCartaRobada();
+                        if (carta != null) {
+                            Boolean resultado = partida.agregarCartaSolucion(carta);
+                            if (!resultado) {
+                                rollbackRobadas(carta, partida);
+                            }
+                        }
                     } else {
                         System.out.println("El valor era entre 1 y 2 che.");
                     }
 
+                    break;
+                case 5:
+                    partida.verSolucion();
                     break;
 
                 default:
@@ -108,9 +110,7 @@ public class AppSolitario {
             System.out.println("--------------------------------------------------------");
             sc.nextLine();
         }
-
         sc.close();
-
     }
 
     public static void menuOpciones() {
@@ -119,17 +119,27 @@ public class AppSolitario {
         System.out.println("Opcion 2) Robar una carta del mazo.");
         System.out.println("Opcion 3) Agregar una carta en una columna.");
         System.out.println("Opcion 4) Agregar una carta a la solucion.");
+        System.out.println("Opcion 5) Ver palos armados");
         System.out.println("Opcion 8) Salir.");
     }
+
+    public static int cargarColumnaUsuario(Scanner sc) {
+        System.out.print("Ingrese una columna (1-7): ");
+        int columna = sc.nextInt();
+        if (columna > 0 && columna < 8) {
+            return columna;
+        } else {
+            System.out.println("Upa se cargo un valor de columna invalido");
+            return -1;
+        }
+    }
+
+    public static void rollbackRobadas(Carta carta, Partida partida) {
+        partida.devolverCartaRobada(carta);
+    }
+
+    public static void rollbackColumna(Carta carta, Partida partida, int columnaOrigen) {
+        partida.rollbackColumna(carta, columnaOrigen);
+    }
+
 }
-/*
- * tenes una mazo de cartas desde el as,2,3,4,5,6,7,8,9,j,q,k cada carta ademas
- * de su valor tiene su color/palo
- * una de 52 objetos cartas puede ser, el repositorio llamado mazo y una clase
- * llamada carta
- * un servicio que sea el que hace las jugadas y uno que guarde todos los datos
- * de la partida actual, otro repo para la partida?
- * los repos deberian tener un boton para reiniciar si el jugador quiere jugar
- * otra partida
- * es decir el boton ejecuta una funcion resetear()
- */
