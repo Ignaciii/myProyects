@@ -46,9 +46,10 @@ public class Mazo implements Iterable<Carta> {
     }
 
     public List<Carta> getMazo() {
-        if (mazo.isEmpty())
-            cargarMazo();
-        return mazo;
+        if (!mazo.isEmpty())
+            return mazo;
+        else
+            return null;
     }
 
     public void shuffle() {

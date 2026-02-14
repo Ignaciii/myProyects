@@ -35,7 +35,7 @@ public class Partida {
         Carta carta = mazo.drawOne();
         if (carta != null) {
             carta.darVuelta();
-            cartasUsables.add(mazo.drawOne());
+            cartasUsables.add(carta);
         } else {
             System.out.println("No hay mas cartas en el mazo!!!");
         }
@@ -75,8 +75,7 @@ public class Partida {
             cartasVisibles += "No hay cartas robadas";
         }
 
-        return cartasVisibles + ", la cantidad de cartas usables es: " + cartasUsables.size()
-                + " La cantidad de cartas en el mazo es: " + mazo.getMazo().size();
+        return cartasVisibles;
     }
 
     public Carta sacarDeColumna(int columna) {
