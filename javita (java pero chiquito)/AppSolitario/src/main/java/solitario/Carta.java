@@ -50,7 +50,7 @@ public class Carta {
     }
 
     public String toString() {
-        return valor + palo;
+        return valor + " " + palo;
 
     }
 }

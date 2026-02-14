@@ -32,9 +32,9 @@ public class Columna {
                     str += "X ";
                 }
             }
-            return "Columna " + numeroDeColumna + str + "\n";
+            return "Columna " + numeroDeColumna + "| " + str + "\n";
         } else
-            return "Columna " + numeroDeColumna + " vacia.\n";
+            return "Columna " + numeroDeColumna + "| vacia.\n";
     }
 
     public Carta sacarDeColumna() {
@@ -88,6 +88,10 @@ public class Columna {
             elementos.add(carta);
         }
 
+    }
+
+    public void resetear() {
+        elementos.clear();
     }
 
 }

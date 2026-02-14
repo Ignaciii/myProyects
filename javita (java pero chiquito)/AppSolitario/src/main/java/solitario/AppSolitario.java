@@ -6,20 +6,28 @@ public class AppSolitario {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcion = -1;
-        menuOpciones();
+
         // este creo que puedo ponerlo directamente en el repoPartida
         Mazo mazo = new Mazo();
         PalosArmados palosArmados = new PalosArmados();
         Partida partida = new Partida(mazo, palosArmados);
 
         partida.llenarColumna();
-        partida.verCartas();
 
+        String espacio = "--------------------------------------------------------";
+        System.out.println(espacio);
+        menuOpciones();
+        System.out.println(espacio);
+        System.out.println(partida.verCartas());
+        System.out.println(espacio);
         while (opcion != 8) {
-            System.out.print("Para comenzar seleccione una opcion: ");
+
+            System.out.print("Seleccione una opcion: ");
             opcion = sc.nextInt();
 
             switch (opcion) {
+
+                // TODO : averiguar por que da error de indice fuera de limites
                 case 1:
                     partida.reiniciarPartida();
 
@@ -113,10 +121,14 @@ public class AppSolitario {
                     break;
 
             }
-            System.out.println("--------------------------------------------------------");
-            partida.verCartas();
-            System.out.println("--------------------------------------------------------");
+
             sc.nextLine();
+            System.out.println(espacio);
+            menuOpciones();
+            System.out.println(espacio);
+            System.out.println(partida.verCartas());
+            System.out.println(espacio);
+
         }
         sc.close();
     }

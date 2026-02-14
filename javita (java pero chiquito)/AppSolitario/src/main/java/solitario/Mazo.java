@@ -30,8 +30,9 @@ public class Mazo implements Iterable<Carta> {
 
                 }
             }
+            shuffle();
         }
-        shuffle();
+
     }
 
     public Iterator<Carta> iterator() {
@@ -41,13 +42,13 @@ public class Mazo implements Iterable<Carta> {
     public void resetear() {
         mazo.clear();
         cargarMazo();
-        shuffle();
+        // shuffle();
     }
 
     public List<Carta> getMazo() {
         if (mazo.isEmpty())
             cargarMazo();
-        return mazo.stream().toList();
+        return mazo;
     }
 
     public void shuffle() {

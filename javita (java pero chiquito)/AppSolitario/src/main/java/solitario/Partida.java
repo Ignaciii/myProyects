@@ -47,7 +47,11 @@ public class Partida {
         mazo.resetear();
         palosArmados.resetear();
 
-        columnas.clear();
+        cartasUsables.clear();
+
+        for (Columna col : columnas) {
+            col.resetear();
+        }
         llenarColumna();
         System.out.println("Partida reinicida!!!");
     }
@@ -71,7 +75,8 @@ public class Partida {
             cartasVisibles += "No hay cartas robadas";
         }
 
-        return cartasVisibles;
+        return cartasVisibles + ", la cantidad de cartas usables es: " + cartasUsables.size()
+                + " La cantidad de cartas en el mazo es: " + mazo.getMazo().size();
     }
 
     public Carta sacarDeColumna(int columna) {
