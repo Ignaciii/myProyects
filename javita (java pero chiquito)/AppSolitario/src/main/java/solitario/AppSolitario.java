@@ -55,16 +55,24 @@ public class AppSolitario {
                         }
 
                     } else if (eleccion == 2) {
-                        System.out.println("Joya sacamos de las disponibles");
-                        int columnaDestino = cargarColumnaUsuario(sc);
                         Carta carta = partida.usarCartaRobada();
-                        if (carta != null && columnaDestino != -1) {
-                            Boolean resultado = partida.agregarCartaColumna(carta, columnaDestino);
-                            if (!resultado) {
-                                rollbackRobadas(carta, partida);
+                        if (carta != null) {
+                            System.out.println("Joya sacamos de las disponibles");
+                            int columnaDestino = cargarColumnaUsuario(sc);
+
+                            if (columnaDestino != -1) {
+                                Boolean resultado = partida.agregarCartaColumna(carta, columnaDestino);
+                                if (!resultado) {
+                                    rollbackRobadas(carta, partida);
+                                }
+                            } else {
+                                System.out.println("Che, la columna destino tiene que ir entre 1-7");
                             }
-                        } else {
-                            System.out.println("Error: no se pudo cargar esa carta alli.");
+
+                        }
+
+                        else {
+                            System.out.println("Upa, no hay cartas robadas che.");
                         }
 
                     } else {
