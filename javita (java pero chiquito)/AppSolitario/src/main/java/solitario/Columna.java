@@ -1,6 +1,7 @@
 package solitario;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Columna {
@@ -32,31 +33,53 @@ public class Columna {
                     str += "X ";
                 }
             }
-            return "Columna " + numeroDeColumna + "| " + str + "\n";
+            return "Columna " + numeroDeColumna + "| [" + str + "]\n";
         } else
-            return "Columna " + numeroDeColumna + "| vacia.\n";
+            return "Columna " + numeroDeColumna + "| [vacia]\n";
     }
 
-    public Carta sacarDeColumna() {
+    public List<Carta> sacarDeColumna(int cantidad) {
+        List<Carta> cartas = new ArrayList<>();
         if (!elementos.isEmpty()) {
-            Carta carta = elementos.getLast();
-            elementos.removeLast();
-            if (!elementos.isEmpty()) {
-                elementos.getLast().darVuelta();
+            if (cantidad == 1) {
+                Carta carta = elementos.getLast();
+                elementos.removeLast();
+                if (!elementos.isEmpty()) {
+                    if (!elementos.isEmpty() && !elementos.getLast().visible())
+                        elementos.getLast().darVuelta();
+                }
+                cartas.add(carta);
+
+            } else if (cantidad > 1) {
+
+                if (!elementos.isEmpty()) {
+                    cartas = sacarCartasColumna(cantidad);
+                    if (!elementos.isEmpty() && !elementos.getLast().visible())
+                        elementos.getLast().darVuelta();
+                }
             }
-            return carta;
+
+            return cartas;
         } else
             return null;
     }
 
-    public Boolean agregarCartaColumna(Carta carta) {
-        if (validarCarta(carta)) {
-            elementos.add(carta);
-            return true;
-        } else {
+    // la cantidad aca dice cuantas cartas vamos a sacar, en el caso comun solo
+    // sacamos una por eso devuelve el ultimo nada mas
+    public Boolean agregarCartaColumna(List<Carta> listadoCarta) {
+        if (!listadoCarta.isEmpty()) {
+            if (validarCarta(listadoCarta.getLast()) && listadoCarta.size() == 1) {
+                elementos.add(listadoCarta.getLast());
+                return true;
+            } else if (listadoCarta.size() > 1) {
 
+                return agregarCartasColumna(listadoCarta);
+            } else {
+
+                return false;
+            }
+        } else
             return false;
-        }
     }
 
     public Boolean validarCarta(Carta cartaAValidar) {
@@ -80,18 +103,69 @@ public class Columna {
         elementos.add(carta);
     }
 
-    public void rollbackColumna(Carta carta) {
-        if (!elementos.isEmpty()) {
+    public void rollbackColumna(List<Carta> cartas) {
+        if (!elementos.isEmpty() && cartas.size() == 1) {
             elementos.getLast().darVuelta();
-            elementos.add(carta);
+            elementos.add(cartas.getLast());
+        } else if (cartas.size() > 1) {
+            rollbackVariasCartas(cartas);
         } else {
-            elementos.add(carta);
+            elementos.add(cartas.getLast());
         }
 
     }
 
     public void resetear() {
         elementos.clear();
+    }
+
+    public Boolean agregarCartasColumna(List<Carta> listadoCartas) {
+        if (validarCarta(listadoCartas.getFirst())) {
+            listadoCartas.forEach(carta -> elementos.add(carta));
+            return true;
+        }
+        return false;
+    }
+
+    public List<Carta> sacarCartasColumna(int cantidadASacar) {
+
+        if (cantidadASacar > elementosVisibles() || elementos.isEmpty()) {
+            return null;
+        }
+        List<Carta> cartas = new ArrayList<>();
+
+        for (int i = 0; i < cantidadASacar; i++) {
+            cartas.add(elementos.getLast());
+            elementos.removeLast();
+        }
+
+        if (!elementos.isEmpty() && !elementos.getLast().visible())
+            elementos.getLast().darVuelta();
+
+        // return cartas.reversed(); funca pero antes de java 21 no se puede usar
+        // reversed, asi que lo hago a mano
+        Collections.reverse(cartas);
+        return cartas;
+
+    }
+
+    public int elementosVisibles() {
+        int elementosVisibles = 0;
+        for (Carta c : elementos) {
+            if (c.visible()) {
+                elementosVisibles += 1;
+            }
+        }
+        return elementosVisibles;
+    }
+
+    public void rollbackVariasCartas(List<Carta> cartas) {
+        if (!cartas.isEmpty()) {
+            for (Carta carta : cartas) {
+                elementos.add(carta);
+            }
+        }
+
     }
 
 }

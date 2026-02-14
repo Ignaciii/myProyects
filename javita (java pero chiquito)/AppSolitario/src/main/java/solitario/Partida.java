@@ -70,7 +70,7 @@ public class Partida {
             cartasVisibles += columna.verCartas();
         }
         if (!cartasUsables.isEmpty()) {
-            cartasVisibles += "La ultima carta robada usable es: " + cartasUsables.getLast().toString();
+            cartasVisibles += "La ultima carta robada usable es: [" + cartasUsables.getLast().toString() + "]";
         } else {
             cartasVisibles += "No hay cartas robadas";
         }
@@ -78,18 +78,20 @@ public class Partida {
         return cartasVisibles;
     }
 
-    public Carta sacarDeColumna(int columna) {
+    public List<Carta> sacarDeColumna(int columna, int cantidad) {
         if (columna > 0 && columna < 8) {
-            Carta carta = columnas.get(columna - 1).sacarDeColumna();
+            List<Carta> cartas = columnas.get(columna - 1).sacarDeColumna(cantidad);
 
-            return carta;
+            return cartas;
         } else {
             return null;
         }
     }
 
-    public Boolean agregarCartaColumna(Carta carta, int columna) {
-        return columnas.get(columna - 1).agregarCartaColumna(carta);
+    // a esta funcion la debemos manipular para que permita cargar mas de una carta
+    // en otra columna
+    public Boolean agregarCartaColumna(List<Carta> cartas, int columna, int cantidad) {
+        return columnas.get(columna - 1).agregarCartaColumna(cartas);
 
     }
 
@@ -114,8 +116,8 @@ public class Partida {
         palosArmados.verSolucion();
     }
 
-    public void rollbackColumna(Carta carta, int columnaOrigen) {
-        columnas.get(columnaOrigen - 1).rollbackColumna(carta);
+    public void rollbackColumna(List<Carta> cartas, int columnaOrigen) {
+        columnas.get(columnaOrigen - 1).rollbackColumna(cartas);
     }
 
     public Boolean validarVictoria() {
