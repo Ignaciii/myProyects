@@ -2,8 +2,10 @@ package proyectoMaven;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.sql.Connection;
-import java.sql.SQLException;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class AppTareav3 {
     public AppTareav3() {
@@ -11,11 +13,10 @@ public class AppTareav3 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Connection conexion = ConexionBD.crearConexion();
-        if (conexion != null) {
-            ConexionBD.inicializarBD(conexion);
-        }
-        AlumnoDao alumnoDao = new AlumnoDao(conexion);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("miUnidad");
+        EntityManager em = emf.createEntityManager();
+
+        AlumnoDao alumnoDao = new AlumnoDao(em);
         Repositorio repositorio = new Repositorio(alumnoDao);
 
         int opcion = 0;
@@ -45,16 +46,15 @@ public class AppTareav3 {
         }
 
         try {
-            conexion.close();
-            try {
-                scanner.close();
-
-            } catch (Exception e) {
-                System.out.println("Error al cerrar el scanner:" + e.getMessage());
-            }
-        } catch (SQLException e) {
-            System.out.println("Problema al cerrar la conexion: " + e.getMessage());
+            em.close();
+            scanner.close();
+            emf.close();
         }
+
+        catch (Exception e) {
+            System.out.println("Error al cerrar conexiones:" + e.getMessage());
+        }
+
     }
 
     // DONE

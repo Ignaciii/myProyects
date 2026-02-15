@@ -1,5 +1,9 @@
 package proyectoMaven;
 
+import jakarta.persistence.*;
+
+@Table(name = "alumnos")
+@Entity
 public class Alumno {
     public Alumno() {
     }
@@ -11,9 +15,14 @@ public class Alumno {
         this.parcial2 = parcial2;
     }
 
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    @Column(name = "legajo", nullable = false)
+    @Id
     private int legajo;
+    @Column(name = "parcial1", nullable = false)
     private Double parcial1;
+    @Column(name = "parcial2", nullable = false)
     private Double parcial2;
 
     public String getNombre() {
