@@ -6,9 +6,9 @@ import java.util.Scanner;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import proyectoMaven.DAO.AlumnoDao;
-import proyectoMaven.Models.Alumno;
-import proyectoMaven.Repository.Repositorio;
+import proyectoMaven.DAO.*;
+import proyectoMaven.Models.*;
+import proyectoMaven.Repository.*;
 
 public class AppTareav3 {
     public AppTareav3() {
@@ -20,7 +20,7 @@ public class AppTareav3 {
         EntityManager em = emf.createEntityManager();
 
         AlumnoDao alumnoDao = new AlumnoDao(em);
-        Repositorio repositorio = new Repositorio(alumnoDao);
+        RepositorioAlumno repositorio = new RepositorioAlumno(alumnoDao);
 
         int opcion = 0;
         while (opcion != 8) {
@@ -61,7 +61,7 @@ public class AppTareav3 {
     }
 
     // DONE
-    public static void cargarAlumnos(Repositorio repositorio, Scanner scanner) {
+    public static void cargarAlumnos(RepositorioAlumno repositorio, Scanner scanner) {
 
         try {
             System.out.print("\nCuantos alumnos desea cargar: ");
@@ -95,7 +95,7 @@ public class AppTareav3 {
     }
 
     // DONE
-    public static void mostrarAlumnos(Repositorio repositorio) {
+    public static void mostrarAlumnos(RepositorioAlumno repositorio) {
 
         for (Alumno a : repositorio) {
             System.out.println(a.toString() + "\nPromedio:  "
@@ -106,7 +106,7 @@ public class AppTareav3 {
     }
 
     // DONE
-    public static void deleteAlumno(Repositorio repositorio, int legajo) {
+    public static void deleteAlumno(RepositorioAlumno repositorio, int legajo) {
         repositorio.borrarAlumno(legajo);
 
     }

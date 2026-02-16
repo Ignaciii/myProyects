@@ -1,18 +1,21 @@
 package proyectoMaven.Models;
 
 import jakarta.persistence.*;
+import java.util.List;
 
-@Table(name = "alumnos")
+@Table(name = "alumno")
 @Entity
 public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(String nombre, int legajo, Double parcial1, Double parcial2) {
+    public Alumno(String nombre, int legajo, Double parcial1, Double parcial2, Curso curso, List<Materia> materias) {
         this.nombre = nombre;
         this.legajo = legajo;
         this.parcial1 = parcial1;
         this.parcial2 = parcial2;
+        this.curso = curso;
+        this.materias = materias;
     }
 
     @Column(name = "nombre", nullable = false)
@@ -24,6 +27,14 @@ public class Alumno {
     private Double parcial1;
     @Column(name = "parcial2", nullable = false)
     private Double parcial2;
+
+    @Column(name = "curso", nullable = false)
+    @ManyToOne
+    private Curso curso;
+
+    @Column(name = "materias", nullable = false)
+    @ManyToMany
+    private List<Materia> materias;
 
     public String getNombre() {
         return nombre;

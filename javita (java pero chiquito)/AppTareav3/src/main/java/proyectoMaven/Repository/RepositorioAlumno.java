@@ -6,13 +6,13 @@ import java.util.List;
 import proyectoMaven.DAO.AlumnoDao;
 import proyectoMaven.Models.Alumno;
 
-public class Repositorio implements Iterable<Alumno> {
-    public Repositorio(List<Alumno> alumnos, AlumnoDao alumnoDao) {
+public class RepositorioAlumno implements Iterable<Alumno> {
+    public RepositorioAlumno(List<Alumno> alumnos, AlumnoDao alumnoDao) {
         this.alumnos = alumnos;
         this.alumnoDAO = alumnoDao;
     }
 
-    public Repositorio(AlumnoDao alumnoDAO) {
+    public RepositorioAlumno(AlumnoDao alumnoDAO) {
         this.alumnos = alumnoDAO.mostrarAlumnosDAO();
         this.alumnoDAO = alumnoDAO;
     }
