@@ -39,10 +39,10 @@ public class MateriaDao {
         try {
 
             em.getTransaction().begin();
-            Materia materiBorrar = em.find(Materia.class, id);
-            if (materiBorrar != null) {
-                materiBorrar.cambiarEstado();
-                em.merge(materiBorrar);
+            Materia materiaBorrar = em.find(Materia.class, id);
+            if (materiaBorrar != null) {
+                materiaBorrar.cambiarEstado();
+
             }
             em.getTransaction().commit();
             return true;

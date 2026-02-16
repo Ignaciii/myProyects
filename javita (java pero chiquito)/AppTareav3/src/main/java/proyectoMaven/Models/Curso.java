@@ -31,7 +31,7 @@ public class Curso {
     @Column(name = "año", nullable = false)
     private int año;
     @Column(name = "esActivo", nullable = false)
-    private Boolean esActivo;
+    private Boolean esActivo = true;
 
     @ManyToMany(mappedBy = "cursos")
     private List<Profesor> profesores;
@@ -39,6 +39,10 @@ public class Curso {
     private List<Alumno> alumnos;
     @ManyToOne
     private Materia materia;
+
+    public int getId() {
+        return id;
+    }
 
     public void setAlumnos(List<Alumno> alumnos) {
         if (!alumnos.isEmpty())
@@ -57,6 +61,10 @@ public class Curso {
 
     public void cambiarEstado() {
         this.esActivo = !esActivo;
+    }
+
+    public Boolean estaActivo() {
+        return esActivo;
     }
 
 }

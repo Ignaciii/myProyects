@@ -33,7 +33,7 @@ public class Materia {
     @Column(name = "nombre", nullable = false)
     private String nombre;
     @Column(name = "esActivo", nullable = false)
-    private Boolean esActivo;
+    private Boolean esActivo = true;
 
     @ManyToMany(mappedBy = "materias")
     private List<Alumno> alumnos;
@@ -54,4 +54,11 @@ public class Materia {
         this.esActivo = !esActivo;
     }
 
+    public int getCodigoMateria() {
+        return codigoMateria;
+    }
+
+    public Boolean estaActivo() {
+        return esActivo;
+    }
 }

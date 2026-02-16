@@ -32,7 +32,7 @@ public class Alumno {
     @Column(name = "parcial2", nullable = false)
     private Double parcial2;
     @Column(name = "esActivo", nullable = false)
-    private Boolean esActivo;
+    private Boolean esActivo = true;
 
     @ManyToOne
     private Curso curso;
@@ -54,6 +54,10 @@ public class Alumno {
     public Double getParcial2() {
         return parcial2;
 
+    }
+
+    public Boolean estaActivo() {
+        return esActivo;
     }
 
     public Double calcularPromedio() {

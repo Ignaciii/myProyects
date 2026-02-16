@@ -97,7 +97,7 @@ public class AppTareav3 {
     // DONE
     public static void mostrarAlumnos(RepositorioAlumno repositorio) {
 
-        for (Alumno a : repositorio) {
+        for (Alumno a : repositorio.getListadoAlumnos()) {
             System.out.println(a.toString() + "\nPromedio:  "
                     + a.calcularPromedio());
             System.out.println("--------------------------------");

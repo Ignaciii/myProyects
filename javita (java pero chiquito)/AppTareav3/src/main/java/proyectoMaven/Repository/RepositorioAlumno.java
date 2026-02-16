@@ -1,12 +1,11 @@
 package proyectoMaven.Repository;
 
-import java.util.Iterator;
 import java.util.List;
 
 import proyectoMaven.DAO.AlumnoDao;
 import proyectoMaven.Models.Alumno;
 
-public class RepositorioAlumno implements Iterable<Alumno> {
+public class RepositorioAlumno {
     public RepositorioAlumno(List<Alumno> alumnos, AlumnoDao alumnoDao) {
         this.alumnos = alumnos;
         this.alumnoDAO = alumnoDao;
@@ -20,22 +19,18 @@ public class RepositorioAlumno implements Iterable<Alumno> {
     private List<Alumno> alumnos;
     private AlumnoDao alumnoDAO;
 
-    public void agregarAlumno(Alumno alumno) {
-        if (alumnoDAO.agregarAlumnoBD(alumno))
+    public Boolean agregarAlumno(Alumno alumno) {
+        if (alumno != null && alumnoDAO.agregarAlumnoBD(alumno)) {
             alumnos.add(alumno);
-        else {
-            System.out.println("No se borro de la base de datos y tampoco de memoria!!!");
+            return true;
+
         }
+        return false;
 
-    }
-
-    public Iterator<Alumno> iterator() {
-        return alumnos.iterator();
     }
 
     public List<Alumno> getListadoAlumnos() {
-        alumnos = alumnoDAO.mostrarAlumnosDAO();
-        return alumnos.stream().toList();
+        return alumnos;
     }
 
     // DONE
@@ -43,11 +38,13 @@ public class RepositorioAlumno implements Iterable<Alumno> {
         return this.alumnos.stream().anyMatch(s -> s.getLegajo() == (legajo));
     }
 
-    public void borrarAlumno(int legajo) {
+    public Boolean borrarAlumno(int legajo) {
         if (alumnoDAO.cambiarEstadoAlumnoDAO(legajo)) {
             alumnos.removeIf(a -> a.getLegajo() == legajo);
+            return true;
 
         }
+        return false;
 
     }
 

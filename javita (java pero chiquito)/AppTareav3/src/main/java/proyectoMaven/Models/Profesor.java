@@ -31,7 +31,7 @@ public class Profesor {
     @Column(name = "titular", nullable = false)
     private Boolean titular;
     @Column(name = "esActivo", nullable = false)
-    private Boolean esActivo;
+    private Boolean esActivo = true;
 
     @ManyToMany
     private List<Curso> cursos;
@@ -43,6 +43,14 @@ public class Profesor {
 
     public void cambiarEstado() {
         this.esActivo = !esActivo;
+    }
+
+    public int getNumeroMatricula() {
+        return numeroMatricula;
+    }
+
+    public Boolean estaActivo() {
+        return esActivo;
     }
 
 }
