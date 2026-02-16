@@ -1,6 +1,8 @@
 package proyectoMaven.Models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "profesor")
@@ -9,15 +11,16 @@ public class Profesor {
     public Profesor() {
     }
 
-    public Profesor(int numeroMatricula, String nombre, String apellido, Boolean titular, List<Curso> cursos) {
+    public Profesor(int numeroMatricula, String nombre, String apellido, Boolean titular) {
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.titular = titular;
-        this.cursos = cursos;
+        this.cursos = new ArrayList<>();
     }
 
     @Id
+    @Column(name = "numeroMatricula", nullable = false)
     private int numeroMatricula;
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -25,8 +28,13 @@ public class Profesor {
     private String apellido;
     @Column(name = "titular", nullable = false)
     private Boolean titular;
-    @Column(name = "cursos", nullable = false)
-    @OneToMany(mappedBy = "profesor")
+
+    @ManyToMany
     private List<Curso> cursos;
+
+    public void setCursos(List<Curso> cursos) {
+        if (!cursos.isEmpty())
+            this.cursos = cursos;
+    }
 
 }

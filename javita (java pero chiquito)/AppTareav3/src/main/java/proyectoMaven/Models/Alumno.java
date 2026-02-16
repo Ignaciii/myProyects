@@ -1,6 +1,8 @@
 package proyectoMaven.Models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "alumno")
@@ -15,24 +17,21 @@ public class Alumno {
         this.parcial1 = parcial1;
         this.parcial2 = parcial2;
         this.curso = curso;
-        this.materias = materias;
+        this.materias = new ArrayList<>();
     }
 
+    @Id
+    @Column(name = "legajo")
+    private int legajo;
     @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Column(name = "legajo", nullable = false)
-    @Id
-    private int legajo;
     @Column(name = "parcial1", nullable = false)
     private Double parcial1;
     @Column(name = "parcial2", nullable = false)
     private Double parcial2;
 
-    @Column(name = "curso", nullable = false)
     @ManyToOne
     private Curso curso;
-
-    @Column(name = "materias", nullable = false)
     @ManyToMany
     private List<Materia> materias;
 
@@ -61,6 +60,11 @@ public class Alumno {
     public String toString() {
         return "Alumno: " + nombre + "\n Legajo es: " + legajo + "\nPrimer parcial: " + parcial1 + "\nSegundo parcial: "
                 + parcial2;
+    }
+
+    public void setMaterias(List<Materia> materias) {
+        if (!materias.isEmpty())
+            this.materias = materias;
     }
 
 }

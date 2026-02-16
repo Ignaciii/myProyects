@@ -1,5 +1,6 @@
 package proyectoMaven.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -10,18 +11,18 @@ public class Materia {
     public Materia() {
     }
 
-    public Materia(int codigoMateria, Boolean troncal, String duracion, String nombre, List<Alumno> alumnos,
-            List<Curso> cursos) {
+    public Materia(int codigoMateria, Boolean troncal, String duracion, String nombre) {
         this.codigoMateria = codigoMateria;
         this.troncal = troncal;
         this.duracion = duracion;
         this.nombre = nombre;
-        this.alumnos = alumnos;
-        this.cursos = cursos;
+        this.alumnos = new ArrayList<>();
+        this.cursos = new ArrayList<>();
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "codigoMateria")
     private int codigoMateria;
 
     @Column(name = "troncal", nullable = false)
@@ -30,12 +31,21 @@ public class Materia {
     private String duracion;
     @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Column(name = "alumnos", nullable = false)
-    @ManyToMany(mappedBy = "curso")
+
+    @ManyToMany(mappedBy = "materias")
     private List<Alumno> alumnos;
 
-    @Column(name = "cursos", nullable = false)
     @OneToMany(mappedBy = "materia")
     private List<Curso> cursos;
+
+    public void setAlumnos(List<Alumno> alumnos) {
+        if (!alumnos.isEmpty())
+            this.alumnos = alumnos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        if (!cursos.isEmpty())
+            this.cursos = cursos;
+    }
 
 }

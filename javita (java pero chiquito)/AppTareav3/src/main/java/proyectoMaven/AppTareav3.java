@@ -81,8 +81,8 @@ public class AppTareav3 {
                     Double p1Aux = scanner.nextDouble();
                     System.out.print("Ingrese nota del segundo parcial: ");
                     Double p2Aux = scanner.nextDouble();
-                    Alumno alumno = new Alumno(nomAux, legAux, p1Aux, p2Aux);
-                    repositorio.agregarAlumno(alumno);
+                    // Alumno alumno = new Alumno(nomAux, legAux, p1Aux, p2Aux);
+                    // repositorio.agregarAlumno(alumno);
                     System.out.println();
                     scanner.nextLine();
                 }

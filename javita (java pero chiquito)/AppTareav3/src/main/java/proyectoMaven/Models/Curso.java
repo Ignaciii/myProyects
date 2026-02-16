@@ -1,6 +1,8 @@
 package proyectoMaven.Models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "curso")
@@ -9,47 +11,44 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(String nombre, int año, int id, Profesor profesor, List<Alumno> alumnos, Materia materia) {
+    public Curso(String nombre, int año, int id) {
         this.nombre = nombre;
         this.id = id;
         this.año = año;
-        this.profesor = profesor;
-        this.alumnos = alumnos;
-        this.materia = materia;
+        this.profesores = new ArrayList<>();
+        this.alumnos = new ArrayList<>();
+        this.materia = null;
     }
-
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
-
-    @Column(name = "año", nullable = false)
-    private int año;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+    @Column(name = "año", nullable = false)
+    private int año;
 
-    @Column(name = "profesor", nullable = false)
-    @ManyToOne
-    private Profesor profesor;
-
-    @Column(name = "alumnos", nullable = false)
+    @ManyToMany(mappedBy = "cursos")
+    private List<Profesor> profesores;
     @OneToMany(mappedBy = "curso")
     private List<Alumno> alumnos;
-
-    @Column(name = "materia", nullable = false)
     @ManyToOne
     private Materia materia;
 
-    public String getNombre() {
-        return nombre;
+    public void setAlumnos(List<Alumno> alumnos) {
+        if (!alumnos.isEmpty())
+            this.alumnos = alumnos;
     }
 
-    public int getAño() {
-        return año;
+    public void setProfesor(List<Profesor> profesores) {
+        if (!profesores.isEmpty())
+            this.profesores = profesores;
     }
 
-    public int getId() {
-        return id;
+    public void setMateria(Materia materia) {
+        if (materia != null)
+            this.materia = materia;
     }
+
 }

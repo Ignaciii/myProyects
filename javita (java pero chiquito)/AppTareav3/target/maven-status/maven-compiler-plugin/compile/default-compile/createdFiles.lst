@@ -1,0 +1,13 @@
+proyectoMaven\Repository\RepositorioCurso.class
+proyectoMaven\AppTareav3.class
+proyectoMaven\Models\Materia.class
+proyectoMaven\Repository\RepositorioProfesor.class
+proyectoMaven\Repository\RepositorioAlumno.class
+proyectoMaven\Repository\RepositorioMateria.class
+proyectoMaven\DAO\ProfesorDao.class
+proyectoMaven\Models\Curso.class
+proyectoMaven\Models\Profesor.class
+proyectoMaven\DAO\AlumnoDao.class
+proyectoMaven\Models\Alumno.class
+proyectoMaven\DAO\CursoDao.class
+proyectoMaven\DAO\MateriaDao.class
