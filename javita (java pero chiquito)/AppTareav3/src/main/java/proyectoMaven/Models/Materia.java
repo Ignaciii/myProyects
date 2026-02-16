@@ -18,6 +18,7 @@ public class Materia {
         this.nombre = nombre;
         this.alumnos = new ArrayList<>();
         this.cursos = new ArrayList<>();
+        this.esActivo = true;
     }
 
     @Id
@@ -31,10 +32,11 @@ public class Materia {
     private String duracion;
     @Column(name = "nombre", nullable = false)
     private String nombre;
+    @Column(name = "esActivo", nullable = false)
+    private Boolean esActivo;
 
     @ManyToMany(mappedBy = "materias")
     private List<Alumno> alumnos;
-
     @OneToMany(mappedBy = "materia")
     private List<Curso> cursos;
 
@@ -46,6 +48,10 @@ public class Materia {
     public void setCursos(List<Curso> cursos) {
         if (!cursos.isEmpty())
             this.cursos = cursos;
+    }
+
+    public void cambiarEstado() {
+        this.esActivo = !esActivo;
     }
 
 }

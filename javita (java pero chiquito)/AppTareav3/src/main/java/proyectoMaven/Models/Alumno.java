@@ -18,17 +18,21 @@ public class Alumno {
         this.parcial2 = parcial2;
         this.curso = curso;
         this.materias = new ArrayList<>();
+        this.esActivo = true;
     }
 
     @Id
     @Column(name = "legajo")
     private int legajo;
+
     @Column(name = "nombre", nullable = false)
     private String nombre;
     @Column(name = "parcial1", nullable = false)
     private Double parcial1;
     @Column(name = "parcial2", nullable = false)
     private Double parcial2;
+    @Column(name = "esActivo", nullable = false)
+    private Boolean esActivo;
 
     @ManyToOne
     private Curso curso;
@@ -65,6 +69,10 @@ public class Alumno {
     public void setMaterias(List<Materia> materias) {
         if (!materias.isEmpty())
             this.materias = materias;
+    }
+
+    public void cambiarEstado() {
+        this.esActivo = !esActivo;
     }
 
 }

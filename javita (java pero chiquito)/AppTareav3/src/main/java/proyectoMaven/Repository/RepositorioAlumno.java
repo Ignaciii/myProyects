@@ -44,7 +44,7 @@ public class RepositorioAlumno implements Iterable<Alumno> {
     }
 
     public void borrarAlumno(int legajo) {
-        if (alumnoDAO.deleteAlumnoDAO(legajo)) {
+        if (alumnoDAO.cambiarEstadoAlumnoDAO(legajo)) {
             alumnos.removeIf(a -> a.getLegajo() == legajo);
 
         }

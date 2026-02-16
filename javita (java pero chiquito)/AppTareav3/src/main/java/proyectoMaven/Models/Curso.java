@@ -18,16 +18,20 @@ public class Curso {
         this.profesores = new ArrayList<>();
         this.alumnos = new ArrayList<>();
         this.materia = null;
+        this.esActivo = true;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
+
     @Column(name = "nombre", nullable = false)
     private String nombre;
     @Column(name = "año", nullable = false)
     private int año;
+    @Column(name = "esActivo", nullable = false)
+    private Boolean esActivo;
 
     @ManyToMany(mappedBy = "cursos")
     private List<Profesor> profesores;
@@ -49,6 +53,10 @@ public class Curso {
     public void setMateria(Materia materia) {
         if (materia != null)
             this.materia = materia;
+    }
+
+    public void cambiarEstado() {
+        this.esActivo = !esActivo;
     }
 
 }

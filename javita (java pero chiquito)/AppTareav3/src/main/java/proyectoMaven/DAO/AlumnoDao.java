@@ -3,7 +3,7 @@ package proyectoMaven.DAO;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
-import proyectoMaven.Models.Alumno;;
+import proyectoMaven.Models.Alumno;
 
 public class AlumnoDao {
     public AlumnoDao(EntityManager em) {
@@ -16,7 +16,8 @@ public class AlumnoDao {
         if (em != null) {
 
             try {
-                List<Alumno> alumnos = em.createQuery("SELECT a FROM Alumno a", Alumno.class).getResultList();
+                List<Alumno> alumnos = em.createQuery("SELECT a FROM Alumno a WHERE a.esActivo IS TRUE", Alumno.class)
+                        .getResultList();
                 return alumnos;
             } catch (Exception e) {
                 System.out.println("Error al conectarse con la bd: " + e.getMessage());
@@ -26,7 +27,7 @@ public class AlumnoDao {
         return null;
     }
 
-    public Boolean deleteAlumnoDAO(int legajoBorrar) {
+    public Boolean cambiarEstadoAlumnoDAO(int legajoBorrar) {
         if (em == null) {
             return null;
         }
@@ -36,7 +37,7 @@ public class AlumnoDao {
             em.getTransaction().begin();
             Alumno alumnoBorrar = em.find(Alumno.class, legajoBorrar);
             if (alumnoBorrar != null) {
-                em.remove(alumnoBorrar);
+                alumnoBorrar.cambiarEstado();
             }
             em.getTransaction().commit();
             return true;

@@ -17,17 +17,21 @@ public class Profesor {
         this.apellido = apellido;
         this.titular = titular;
         this.cursos = new ArrayList<>();
+        this.esActivo = true;
     }
 
     @Id
     @Column(name = "numeroMatricula", nullable = false)
     private int numeroMatricula;
+
     @Column(name = "nombre", nullable = false)
     private String nombre;
     @Column(name = "apellido", nullable = false)
     private String apellido;
     @Column(name = "titular", nullable = false)
     private Boolean titular;
+    @Column(name = "esActivo", nullable = false)
+    private Boolean esActivo;
 
     @ManyToMany
     private List<Curso> cursos;
@@ -35,6 +39,10 @@ public class Profesor {
     public void setCursos(List<Curso> cursos) {
         if (!cursos.isEmpty())
             this.cursos = cursos;
+    }
+
+    public void cambiarEstado() {
+        this.esActivo = !esActivo;
     }
 
 }
