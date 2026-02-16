@@ -1,4 +1,4 @@
-package proyectoMaven;
+package proyectoMaven.Models;
 
 import jakarta.persistence.*;
 

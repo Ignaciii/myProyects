@@ -1,8 +1,9 @@
-package proyectoMaven;
+package proyectoMaven.DAO;
 
 import java.util.List;
 
-import jakarta.persistence.EntityManager;;
+import jakarta.persistence.EntityManager;
+import proyectoMaven.Models.Alumno;;
 
 public class AlumnoDao {
     public AlumnoDao(EntityManager em) {

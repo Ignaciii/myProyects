@@ -6,6 +6,9 @@ import java.util.Scanner;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import proyectoMaven.DAO.AlumnoDao;
+import proyectoMaven.Models.Alumno;
+import proyectoMaven.Repository.Repositorio;
 
 public class AppTareav3 {
     public AppTareav3() {

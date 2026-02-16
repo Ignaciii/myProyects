@@ -1,7 +1,10 @@
-package proyectoMaven;
+package proyectoMaven.Repository;
 
 import java.util.Iterator;
 import java.util.List;
+
+import proyectoMaven.DAO.AlumnoDao;
+import proyectoMaven.Models.Alumno;
 
 public class Repositorio implements Iterable<Alumno> {
     public Repositorio(List<Alumno> alumnos, AlumnoDao alumnoDao) {
