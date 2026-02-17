@@ -1,7 +1,7 @@
 package proyectoMaven.Repository;
 
 import proyectoMaven.DAO.ProfesorDao;
-import proyectoMaven.Models.Alumno;
+
 import proyectoMaven.Models.Profesor;
 import java.util.List;
 
@@ -30,8 +30,16 @@ public class RepositorioProfesor {
         return false;
     }
 
-    public List<Profesor> mostraProfesores() {
+    public List<Profesor> getProfesores() {
         return profesores;
+    }
+
+    public String mostrarProfesores() {
+        StringBuilder sb = new StringBuilder();
+        for (Profesor p : profesores) {
+            sb.append(p.toString()).append("\n");
+        }
+        return sb.toString();
     }
 
     public Boolean actualizarProfesor(Profesor profesor) {

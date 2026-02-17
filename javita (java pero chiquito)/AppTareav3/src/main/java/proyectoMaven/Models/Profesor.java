@@ -37,11 +37,13 @@ public class Profesor {
     @JoinTable(name = "profesorXmateria", joinColumns = @JoinColumn(name = "numeroMatricula"), inverseJoinColumns = @JoinColumn(name = "codigoMateria"))
     private List<Materia> materias;
 
-    public void agregarMateria(Materia materia) {
+    public Boolean agregarMateria(Materia materia) {
         if (materia != null && !this.materias.contains(materia)) {
             this.materias.add(materia);
             materia.agregarProfesor(this);
+            return true;
         }
+        return false;
 
     }
 
@@ -55,6 +57,11 @@ public class Profesor {
 
     public Boolean estaActivo() {
         return esActivo;
+    }
+
+    public String toString() {
+        return "Nombre: " + nombre + "| Apellido: " + apellido + "| Numero de matricula: " + numeroMatricula
+                + "| Es titular: " + (titular ? "Si" : "No");
     }
 
 }

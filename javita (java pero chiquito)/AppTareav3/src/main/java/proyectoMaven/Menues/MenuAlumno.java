@@ -106,9 +106,7 @@ public class MenuAlumno {
 
     public void borrarAlumno() {
 
-        for (Alumno a : repositorioAlumno.getListadoAlumnos()) {
-            System.out.println("Legajo: " + a.getLegajo() + "| Nombre y Apellido: " + a.getNombre());
-        }
+        mostrarAlumnos();
         System.out.print("Ingrese el legajo del alumno a borrar: ");
         int legajoBorrar = scanner.nextInt();
         if (repositorioAlumno.borrarAlumno(legajoBorrar)) {
