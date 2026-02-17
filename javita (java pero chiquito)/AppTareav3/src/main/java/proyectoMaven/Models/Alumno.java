@@ -11,7 +11,7 @@ public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(String nombre, int legajo, Double parcial1, Double parcial2, Curso curso, List<Materia> materias) {
+    public Alumno(String nombre, int legajo, Double parcial1, Double parcial2, Curso curso) {
         this.nombre = nombre;
         this.legajo = legajo;
         this.parcial1 = parcial1;
@@ -66,8 +66,12 @@ public class Alumno {
     }
 
     public String toString() {
-        return "Alumno: " + nombre + "\n Legajo es: " + legajo + "\nPrimer parcial: " + parcial1 + "\nSegundo parcial: "
-                + parcial2;
+        String str = "Alumno: " + nombre + "| Legajo es: " + legajo + "| Primer parcial: " + parcial1
+                + "| Segundo parcial: "
+                + parcial2 + "| Materias inscriptas: " + materias.size();
+        if (curso != null)
+            return str + "| Curso: " + curso.getNombre();
+        return str;
     }
 
     public void setMaterias(List<Materia> materias) {
@@ -77,6 +81,10 @@ public class Alumno {
 
     public void cambiarEstado() {
         this.esActivo = !esActivo;
+    }
+
+    public void agregarMateria(Materia materia) {
+        materias.add(materia);
     }
 
 }

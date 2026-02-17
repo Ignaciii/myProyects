@@ -58,6 +58,10 @@ public class Materia {
         return codigoMateria;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public Boolean estaActivo() {
         return esActivo;
     }

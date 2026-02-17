@@ -48,4 +48,23 @@ public class RepositorioAlumno {
 
     }
 
+    // al parecer usar el stringBuilder es mucho mas eficiente en el uso de memoria
+    public String mostrarAlumnos() {
+        if (!alumnos.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (Alumno a : alumnos) {
+
+                sb.append(a.toString()).append("\n");
+
+            }
+            return sb.toString();
+        }
+        return null;
+
+    }
+
+    public Boolean actualizarAlumno(Alumno alumno) {
+        return alumnoDAO.actualizarAlumno(alumno);
+    }
+
 }

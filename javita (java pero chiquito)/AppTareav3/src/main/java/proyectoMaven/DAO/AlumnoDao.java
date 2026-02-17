@@ -70,4 +70,19 @@ public class AlumnoDao {
 
     }
 
+    public Boolean actualizarAlumno(Alumno alumno) {
+        try {
+            em.getTransaction().begin();
+            em.merge(alumno);
+            em.getTransaction().commit();
+            return true;
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

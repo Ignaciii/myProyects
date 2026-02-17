@@ -22,8 +22,17 @@ public class AppTareav3 {
         AlumnoDao alumnoDao = new AlumnoDao(em);
         RepositorioAlumno repositorio = new RepositorioAlumno(alumnoDao);
 
+        ProfesorDao profesorDao = new ProfesorDao(em);
+        RepositorioProfesor repositorioProfesor = new RepositorioProfesor(profesorDao);
+
+        CursoDao cursoDao = new CursoDao(em);
+        RepositorioCurso repositorioCurso = new RepositorioCurso(cursoDao);
+
+        MateriaDao materiaDao = new MateriaDao(em);
+        RepositorioMateria repositorioMateria = new RepositorioMateria(materiaDao);
+
         int opcion = 0;
-        while (opcion != 8) {
+        while (opcion != 5) {
             menuOpciones();
             System.out.print("Ingrese una opcion para continuar: ");
             opcion = scanner.nextInt();
@@ -43,20 +52,13 @@ public class AppTareav3 {
                     int legajo = scanner.nextInt();
                     deleteAlumno(repositorio, legajo);
                     break;
+                case 4:
+                    break;
 
             }
 
         }
-
-        try {
-            em.close();
-            scanner.close();
-            emf.close();
-        }
-
-        catch (Exception e) {
-            System.out.println("Error al cerrar conexiones:" + e.getMessage());
-        }
+        horaDeCerrar(scanner, emf, em);
 
     }
 
@@ -94,7 +96,6 @@ public class AppTareav3 {
 
     }
 
-    // DONE
     public static void mostrarAlumnos(RepositorioAlumno repositorio) {
 
         for (Alumno a : repositorio.getListadoAlumnos()) {
@@ -112,11 +113,28 @@ public class AppTareav3 {
     }
 
     public static void menuOpciones() {
+        String str = "---------------------------------------------------------------------------------------";
+
+        System.out.println(str);
         System.out.println("Menu de opciones");
-        System.out.println("opcion 1) mostrar alumnos ");
-        System.out.println("opcion 2) agregar alumno ");
-        System.out.println("opcion 3) borrar alumno");
-        System.out.println("opcion 8) salir. ");
+        System.out.println("Opcion 1) Gestionar Alumnos ");
+        System.out.println("Opcion 2) Gestionar Cursos ");
+        System.out.println("Opcion 3) Gestionar Profesores");
+        System.out.println("Opcion 4) Gestionar Materias");
+        System.out.println("Opcion 5) Salir. ");
+        System.out.println(str);
+    }
+
+    public static void horaDeCerrar(Scanner sc, EntityManagerFactory emf, EntityManager em) {
+        sc.close();
+        try {
+            emf.close();
+            em.close();
+
+        } catch (Exception e) {
+            System.out.println("Error al desconectar: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }

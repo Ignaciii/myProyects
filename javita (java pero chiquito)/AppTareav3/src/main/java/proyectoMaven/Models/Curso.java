@@ -65,6 +65,17 @@ public class Curso {
 
     public Boolean estaActivo() {
         return esActivo;
+
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String toString() {
+        String str = "";
+        str += "Id del curso: " + id + "\nNombre: " + nombre + "\nAño: " + año + "\n";
+        return str;
     }
 
 }
