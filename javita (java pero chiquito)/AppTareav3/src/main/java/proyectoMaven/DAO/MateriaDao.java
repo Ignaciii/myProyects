@@ -1,7 +1,7 @@
 package proyectoMaven.DAO;
 
 import jakarta.persistence.EntityManager;
-import proyectoMaven.Models.Alumno;
+
 import proyectoMaven.Models.Materia;
 
 import java.util.List;

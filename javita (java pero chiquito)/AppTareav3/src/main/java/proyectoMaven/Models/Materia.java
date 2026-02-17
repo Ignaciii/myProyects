@@ -12,19 +12,19 @@ public class Materia {
     public Materia() {
     }
 
-    public Materia(Boolean troncal, String duracion, String nombre, List<Comision> comisiones) {
+    public Materia(Boolean troncal, String duracion, String nombre) {
 
         this.troncal = troncal;
         this.duracion = duracion;
         this.nombre = nombre;
         this.alumnos = new ArrayList<>();
         this.profesores = new ArrayList<>();
-        this.comisiones = comisiones;
+        this.comisiones = new ArrayList<>();
         this.esActivo = true;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "codigoMateria")
     private int codigoMateria;
 

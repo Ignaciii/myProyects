@@ -1,9 +1,11 @@
 proyectoMaven\Menues\MenuAlumno.class
+proyectoMaven\Menues\MenuProfesor.class
 proyectoMaven\AppTareav3.class
 proyectoMaven\DAO\ComisionDao.class
 proyectoMaven\Models\Materia.class
 proyectoMaven\Repository\RepositorioComision.class
 proyectoMaven\Repository\RepositorioProfesor.class
+proyectoMaven\Menues\MenuMateria.class
 proyectoMaven\Repository\RepositorioAlumno.class
 proyectoMaven\Models\Comision.class
 proyectoMaven\Repository\RepositorioMateria.class

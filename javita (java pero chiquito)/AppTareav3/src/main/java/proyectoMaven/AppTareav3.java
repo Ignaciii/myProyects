@@ -9,6 +9,8 @@ import proyectoMaven.DAO.*;
 import proyectoMaven.Repository.*;
 import proyectoMaven.Menues.MenuAlumno;
 import proyectoMaven.Menues.MenuComision;
+import proyectoMaven.Menues.MenuMateria;
+import proyectoMaven.Menues.MenuProfesor;
 
 public class AppTareav3 {
     public AppTareav3() {
@@ -33,6 +35,8 @@ public class AppTareav3 {
 
         MenuAlumno menuAlumno = new MenuAlumno(repositorioAlumno, scanner, repositorioMateria);
         MenuComision menuComision = new MenuComision(repositorioMateria, repositorioComision, scanner);
+        MenuProfesor menuProfesor = new MenuProfesor(repositorioProfesor, repositorioMateria, scanner);
+        MenuMateria menuMateria = new MenuMateria(repositorioMateria, scanner, repositorioComision);
 
         int opcion = 0;
         while (opcion != 5) {
@@ -50,10 +54,20 @@ public class AppTareav3 {
                     System.out.println();
                     menuComision.iniciarMenu();
                     break;
+                case 3:
+                    System.out.println();
+                    menuProfesor.iniciarMenu();
+                    break;
+
+                case 4:
+                    System.out.println();
+                    menuMateria.iniciarMenu();
+                    break;
 
             }
         }
         System.out.println("Saliendo...");
+        horaDeCerrar(scanner, emf, em);
     }
 
     public static void menuOpciones() {

@@ -27,8 +27,10 @@ public class MenuProfesor {
             System.out.println(str);
             Menu();
             System.out.println(str);
+            System.out.print("Ingrese una opcion: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
+
             switch (opcion) {
                 case 1:
                     mostrarProfesor();
