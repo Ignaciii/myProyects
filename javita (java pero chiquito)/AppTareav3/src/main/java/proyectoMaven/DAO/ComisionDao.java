@@ -2,25 +2,26 @@ package proyectoMaven.DAO;
 
 import jakarta.persistence.EntityManager;
 
-import proyectoMaven.Models.Curso;
+import proyectoMaven.Models.Comision;
 
 import java.util.List;
 
-public class CursoDao {
+public class ComisionDao {
 
-    public CursoDao(EntityManager em) {
+    public ComisionDao(EntityManager em) {
         this.em = em;
     }
 
     private EntityManager em;
 
-    public List<Curso> mostrarCursosDAO() {
+    public List<Comision> mostrarComisionesDao() {
         if (em != null) {
 
             try {
-                List<Curso> cursos = em.createQuery("SELECT c FROM Curso c WHERE c.esActivo IS TRUE", Curso.class)
+                List<Comision> comisiones = em
+                        .createQuery("SELECT c FROM Comision c WHERE c.esActivo IS TRUE", Comision.class)
                         .getResultList();
-                return cursos;
+                return comisiones;
             } catch (Exception e) {
                 System.out.println("Error al conectarse con la bd: " + e.getMessage());
             }
@@ -30,7 +31,7 @@ public class CursoDao {
     }
 
     // soft delete
-    public Boolean cambiarEstadoCursoDAO(int id) {
+    public Boolean cambiarEstadoComisionDao(int id) {
         if (em == null) {
             return null;
         }
@@ -39,16 +40,16 @@ public class CursoDao {
         try {
 
             em.getTransaction().begin();
-            Curso cursoBorrar = em.find(Curso.class, id);
-            if (cursoBorrar != null) {
-                cursoBorrar.cambiarEstado();
-                em.merge(cursoBorrar);
+            Comision comisionBorrar = em.find(Comision.class, id);
+            if (comisionBorrar != null) {
+                comisionBorrar.cambiarEstado();
+
             }
             em.getTransaction().commit();
             return true;
 
         } catch (Exception e) {
-            System.out.println("Error al llevar a cabo el borrado en la base de datos: " + e.getMessage());
+            System.out.println("Error al borrar la comision de la base de datos: " + e.getMessage());
             e.printStackTrace();
             em.getTransaction().rollback();
             return false;
@@ -56,18 +57,18 @@ public class CursoDao {
 
     }
 
-    public Boolean agregarCursoBD(Curso curso) {
+    public Boolean agregarComisionDao(Comision comision) {
         if (em == null) {
             return null;
         }
 
         try {
             em.getTransaction().begin();
-            em.persist(curso);
+            em.persist(comision);
             em.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            System.out.println("Error al cargar alumno en la base de datos: " + e.getMessage());
+            System.out.println("Error al cargar comision en la base de datos: " + e.getMessage());
             em.getTransaction().rollback();
             e.printStackTrace();
             return false;

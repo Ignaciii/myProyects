@@ -16,7 +16,7 @@ public class Profesor {
         this.nombre = nombre;
         this.apellido = apellido;
         this.titular = titular;
-        this.cursos = new ArrayList<>();
+        this.materias = new ArrayList<>();
         this.esActivo = true;
     }
 
@@ -33,12 +33,16 @@ public class Profesor {
     @Column(name = "esActivo", nullable = false)
     private Boolean esActivo = true;
 
-    @ManyToMany
-    private List<Curso> cursos;
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name = "profesorXmateria", joinColumns = @JoinColumn(name = "numeroMatricula"), inverseJoinColumns = @JoinColumn(name = "codigoMateria"))
+    private List<Materia> materias;
 
-    public void setCursos(List<Curso> cursos) {
-        if (!cursos.isEmpty())
-            this.cursos = cursos;
+    public void agregarMateria(Materia materia) {
+        if (materia != null && !this.materias.contains(materia)) {
+            this.materias.add(materia);
+            materia.agregarProfesor(this);
+        }
+
     }
 
     public void cambiarEstado() {

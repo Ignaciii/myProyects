@@ -1,0 +1,130 @@
+package proyectoMaven.Menues;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import proyectoMaven.Models.Comision;
+import proyectoMaven.Models.Materia;
+import proyectoMaven.Repository.RepositorioComision;
+import proyectoMaven.Repository.RepositorioMateria;
+
+public class MenuComision {
+    public MenuComision(RepositorioMateria repositorioMateria, RepositorioComision repositorioComision,
+            Scanner scanner) {
+        this.repositorioMateria = repositorioMateria;
+        this.repositorioComision = repositorioComision;
+        this.scanner = scanner;
+    }
+
+    private RepositorioComision repositorioComision;
+    private RepositorioMateria repositorioMateria;
+    private Scanner scanner;
+
+    public void iniciarMenu() {
+        int opcion = -1;
+        String str = "----------------------------------------------------------------";
+
+        while (opcion != 5) {
+            System.out.println(str);
+            Menu();
+            System.out.println(str);
+            System.out.print("Ingrese una opcion: ");
+            opcion = scanner.nextInt();
+            switch (opcion) {
+                case 1:
+                    mostrarComisiones();
+                    break;
+
+                case 2:
+                    cargarComision();
+                    break;
+
+                case 3:
+                    borrarComision();
+
+                    break;
+
+                case 4:
+                    asignarMateriaComision();
+                    break;
+
+            }
+        }
+
+    }
+
+    public void Menu() {
+        System.out.println("Gestor de comisiones");
+        System.out.println("Opcion 1) Mostrar comisiones");
+        System.out.println("Opcion 2) Agregar un comision");
+        System.out.println("Opcion 3) Eliminar un comision");
+        System.out.println("Opcion 4) Asignar una Materia");
+        System.out.println("Opcion 5) Volver atras");
+    }
+
+    public void mostrarComisiones() {
+        System.out.println(repositorioComision.mostrarListadoComisiones());
+    }
+
+    public void cargarComision() {
+        try {
+            System.out.print("Ingrese el nombre (ej K7): ");
+            String nombre = scanner.nextLine();
+            System.out.print("Ingrese a que año pertenece (1-5): ");
+            int año = scanner.nextInt();
+            if (repositorioComision.agregarComision(new Comision(nombre, año))) {
+                System.out.println("Comision creada exitosamente!!!");
+                return;
+            }
+            System.out.println("Oops, la comision no se pudo crear");
+
+        } catch (InputMismatchException e) {
+            System.out.println("Error, se ingreso un valor erroneo: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    public void borrarComision() {
+        try {
+            mostrarComisiones();
+            System.out.print("Ingrese el Id de la comision a borrar: ");
+            int comisionBorrar = scanner.nextInt();
+            if (repositorioComision.borrarComision(comisionBorrar)) {
+                System.out.println("Borrado exitoso!!");
+                return;
+            }
+            System.out.println("Oops, no se pudo completar el borrado!!!");
+        } catch (InputMismatchException e) {
+            System.out.println("Error al borrar la comision: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    public void asignarMateriaComision() {
+        try {
+            System.out.println(repositorioMateria.mostrarMaterias());
+            System.out.print("Ingrese el codigo de la materia a asignar: ");
+            int codigoMateria = scanner.nextInt();
+            Materia materia = repositorioMateria.getMaterias().stream()
+                    .filter(m -> m.getCodigoMateria() == codigoMateria).findFirst().orElse(null);
+            System.out.print("Ingrese el id de la comision a la cual asignar la materia:");
+            int idComision = scanner.nextInt();
+            Comision comision = repositorioComision.getListadoComisiones().stream().filter(c -> c.getId() == idComision)
+                    .findFirst().orElse(null);
+            if (comision != null && materia != null && comision.agregarMateria(materia)) {
+                if (repositorioMateria.actualizarMateria(materia)) {
+                    System.out.println("Se agrego la materia exitosamente!!!");
+                    return;
+                }
+
+            }
+            System.out.println("Oops, error al asignar la materia a la comision!!!");
+        } catch (InputMismatchException e) {
+            System.out.println("Error al ingresar el codigo: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+}

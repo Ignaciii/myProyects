@@ -1,6 +1,7 @@
 package proyectoMaven.Repository;
 
 import proyectoMaven.DAO.MateriaDao;
+import proyectoMaven.Models.Alumno;
 import proyectoMaven.Models.Materia;
 import java.util.List;
 
@@ -32,8 +33,19 @@ public class RepositorioMateria {
         return false;
     }
 
-    public List<Materia> mostrarMaterias() {
+    public List<Materia> getMaterias() {
         return materias;
     }
 
+    public String mostrarMaterias() {
+        StringBuilder sb = new StringBuilder();
+        for (Materia m : materias) {
+            sb.append(m.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public Boolean actualizarMateria(Materia materia) {
+        return materiaDao.actualizarMateria(materia);
+    }
 }

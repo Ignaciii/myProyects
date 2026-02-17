@@ -11,12 +11,11 @@ public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(String nombre, int legajo, Double parcial1, Double parcial2, Curso curso) {
+    public Alumno(String nombre, int legajo, Double parcial1, Double parcial2) {
         this.nombre = nombre;
         this.legajo = legajo;
         this.parcial1 = parcial1;
         this.parcial2 = parcial2;
-        this.curso = curso;
         this.materias = new ArrayList<>();
         this.esActivo = true;
     }
@@ -34,10 +33,17 @@ public class Alumno {
     @Column(name = "esActivo", nullable = false)
     private Boolean esActivo = true;
 
-    @ManyToOne
-    private Curso curso;
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name = "alumnoXmateria", joinColumns = @JoinColumn(name = "legajo"), inverseJoinColumns = @JoinColumn(name = "codigoMateria"))
     private List<Materia> materias;
+
+    public void agregarMateria(Materia materia) {
+        if (materia != null && !this.materias.contains(materia)) {
+            this.materias.add(materia);
+            materia.agregarAlumno(this);
+        }
+
+    }
 
     public String getNombre() {
         return nombre;
@@ -69,8 +75,7 @@ public class Alumno {
         String str = "Alumno: " + nombre + "| Legajo es: " + legajo + "| Primer parcial: " + parcial1
                 + "| Segundo parcial: "
                 + parcial2 + "| Materias inscriptas: " + materias.size();
-        if (curso != null)
-            return str + "| Curso: " + curso.getNombre();
+
         return str;
     }
 
@@ -81,10 +86,6 @@ public class Alumno {
 
     public void cambiarEstado() {
         this.esActivo = !esActivo;
-    }
-
-    public void agregarMateria(Materia materia) {
-        materias.add(materia);
     }
 
 }

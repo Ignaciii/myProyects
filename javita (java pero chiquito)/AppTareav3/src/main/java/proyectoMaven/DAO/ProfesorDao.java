@@ -2,6 +2,8 @@ package proyectoMaven.DAO;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
+
+import proyectoMaven.Models.Alumno;
 import proyectoMaven.Models.Profesor;
 
 public class ProfesorDao {
@@ -62,4 +64,20 @@ public class ProfesorDao {
         }
         return false;
     }
+
+    public Boolean actualizarProfesor(Profesor profesor) {
+        try {
+            em.getTransaction().begin();
+            em.merge(profesor);
+            em.getTransaction().commit();
+            return true;
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

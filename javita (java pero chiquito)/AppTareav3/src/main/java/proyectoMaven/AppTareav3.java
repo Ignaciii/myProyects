@@ -1,14 +1,14 @@
 package proyectoMaven;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import proyectoMaven.DAO.*;
-import proyectoMaven.Models.*;
 import proyectoMaven.Repository.*;
+import proyectoMaven.Menues.MenuAlumno;
+import proyectoMaven.Menues.MenuComision;
 
 public class AppTareav3 {
     public AppTareav3() {
@@ -20,16 +20,19 @@ public class AppTareav3 {
         EntityManager em = emf.createEntityManager();
 
         AlumnoDao alumnoDao = new AlumnoDao(em);
-        RepositorioAlumno repositorio = new RepositorioAlumno(alumnoDao);
+        RepositorioAlumno repositorioAlumno = new RepositorioAlumno(alumnoDao);
 
         ProfesorDao profesorDao = new ProfesorDao(em);
         RepositorioProfesor repositorioProfesor = new RepositorioProfesor(profesorDao);
 
-        CursoDao cursoDao = new CursoDao(em);
-        RepositorioCurso repositorioCurso = new RepositorioCurso(cursoDao);
+        ComisionDao comisionDao = new ComisionDao(em);
+        RepositorioComision repositorioComision = new RepositorioComision(comisionDao);
 
         MateriaDao materiaDao = new MateriaDao(em);
         RepositorioMateria repositorioMateria = new RepositorioMateria(materiaDao);
+
+        MenuAlumno menuAlumno = new MenuAlumno(repositorioAlumno, scanner, repositorioMateria);
+        MenuComision menuComision = new MenuComision(repositorioMateria, repositorioComision, scanner);
 
         int opcion = 0;
         while (opcion != 5) {
@@ -40,76 +43,17 @@ public class AppTareav3 {
 
             switch (opcion) {
                 case 1:
-                    mostrarAlumnos(repositorio);
-                    break;
-
-                case 2:
-                    cargarAlumnos(repositorio, scanner);
-                    break;
-
-                case 3:
-                    System.out.print("Ingrese legajo del alumno a borrar: ");
-                    int legajo = scanner.nextInt();
-                    deleteAlumno(repositorio, legajo);
-                    break;
-                case 4:
-                    break;
-
-            }
-
-        }
-        horaDeCerrar(scanner, emf, em);
-
-    }
-
-    // DONE
-    public static void cargarAlumnos(RepositorioAlumno repositorio, Scanner scanner) {
-
-        try {
-            System.out.print("\nCuantos alumnos desea cargar: ");
-            int cantidad = scanner.nextInt();
-            for (int i = 0; i < cantidad; i++) {
-                System.out.print("Ingrese los datos del alumno " + (i + 1));
-                System.out.print("\tLegajo: ");
-                int legAux = scanner.nextInt();
-                if (repositorio.repetido(legAux)) {
-                    System.out.println("\nNo se puede cargar dos veces el mismo alumno!!!!\n");
-                    i = i - 1;
-                } else {
-                    scanner.nextLine();
-                    System.out.print("Nombre y Apellido: ");
-                    String nomAux = scanner.nextLine();
-                    System.out.print("Ingrese nota del primer parcial: ");
-                    Double p1Aux = scanner.nextDouble();
-                    System.out.print("Ingrese nota del segundo parcial: ");
-                    Double p2Aux = scanner.nextDouble();
-                    // Alumno alumno = new Alumno(nomAux, legAux, p1Aux, p2Aux);
-                    // repositorio.agregarAlumno(alumno);
                     System.out.println();
-                    scanner.nextLine();
-                }
+                    menuAlumno.iniciarMenu();
+                    break;
+                case 2:
+                    System.out.println();
+                    menuComision.iniciarMenu();
+                    break;
+
             }
-
-        } catch (InputMismatchException exception) {
-            System.err.println(exception);
         }
-
-    }
-
-    public static void mostrarAlumnos(RepositorioAlumno repositorio) {
-
-        for (Alumno a : repositorio.getListadoAlumnos()) {
-            System.out.println(a.toString() + "\nPromedio:  "
-                    + a.calcularPromedio());
-            System.out.println("--------------------------------");
-        }
-
-    }
-
-    // DONE
-    public static void deleteAlumno(RepositorioAlumno repositorio, int legajo) {
-        repositorio.borrarAlumno(legajo);
-
+        System.out.println("Saliendo...");
     }
 
     public static void menuOpciones() {
@@ -118,7 +62,7 @@ public class AppTareav3 {
         System.out.println(str);
         System.out.println("Menu de opciones");
         System.out.println("Opcion 1) Gestionar Alumnos ");
-        System.out.println("Opcion 2) Gestionar Cursos ");
+        System.out.println("Opcion 2) Gestionar Comisiones ");
         System.out.println("Opcion 3) Gestionar Profesores");
         System.out.println("Opcion 4) Gestionar Materias");
         System.out.println("Opcion 5) Salir. ");

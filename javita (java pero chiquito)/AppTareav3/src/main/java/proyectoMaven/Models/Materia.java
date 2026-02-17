@@ -1,5 +1,6 @@
 package proyectoMaven.Models;
 
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,18 +12,19 @@ public class Materia {
     public Materia() {
     }
 
-    public Materia(int codigoMateria, Boolean troncal, String duracion, String nombre) {
-        this.codigoMateria = codigoMateria;
+    public Materia(Boolean troncal, String duracion, String nombre, List<Comision> comisiones) {
+
         this.troncal = troncal;
         this.duracion = duracion;
         this.nombre = nombre;
         this.alumnos = new ArrayList<>();
-        this.cursos = new ArrayList<>();
+        this.profesores = new ArrayList<>();
+        this.comisiones = comisiones;
         this.esActivo = true;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigoMateria")
     private int codigoMateria;
 
@@ -37,17 +39,39 @@ public class Materia {
 
     @ManyToMany(mappedBy = "materias")
     private List<Alumno> alumnos;
-    @OneToMany(mappedBy = "materia")
-    private List<Curso> cursos;
 
-    public void setAlumnos(List<Alumno> alumnos) {
-        if (!alumnos.isEmpty())
-            this.alumnos = alumnos;
+    @ManyToMany(mappedBy = "materias")
+    private List<Profesor> profesores;
+
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "materiaXcomision", joinColumns = @JoinColumn(name = "codigoMateria"), inverseJoinColumns = @JoinColumn(name = "comisionId"))
+    private List<Comision> comisiones;
+
+    public void agregarAlumno(Alumno alumno) {
+        if (alumno != null && !this.alumnos.contains(alumno)) {
+            this.alumnos.add(alumno);
+            alumno.agregarMateria(this);
+        }
+
     }
 
-    public void setCursos(List<Curso> cursos) {
-        if (!cursos.isEmpty())
-            this.cursos = cursos;
+    public void agregarProfesor(Profesor profesor) {
+        if (profesor != null && !this.profesores.contains(profesor)) {
+            this.profesores.add(profesor);
+            profesor.agregarMateria(this);
+
+        }
+
+    }
+
+    public Boolean dictarEnComision(Comision comision) {
+        if (comision != null && !this.comisiones.contains(comision)) {
+            this.comisiones.add(comision);
+            comision.agregarMateria(this);
+            return true;
+        }
+        return false;
+
     }
 
     public void cambiarEstado() {
@@ -64,5 +88,10 @@ public class Materia {
 
     public Boolean estaActivo() {
         return esActivo;
+    }
+
+    public String toString() {
+        return "Nombre: " + nombre + " | Duracion: " + duracion + " | Codigo de materia: " + codigoMateria
+                + "| Es troncal: " + (troncal ? "Si" : "No");
     }
 }

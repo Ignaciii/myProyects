@@ -1,7 +1,7 @@
 package proyectoMaven.DAO;
 
 import jakarta.persistence.EntityManager;
-
+import proyectoMaven.Models.Alumno;
 import proyectoMaven.Models.Materia;
 
 import java.util.List;
@@ -73,6 +73,23 @@ public class MateriaDao {
             return false;
         }
 
+    }
+
+    // va aca el actualizar y no en la comision por ser la dueña de la relacion
+
+    public Boolean actualizarMateria(Materia materia) {
+        try {
+            em.getTransaction().begin();
+            em.merge(materia);
+            em.getTransaction().commit();
+            return true;
+
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
