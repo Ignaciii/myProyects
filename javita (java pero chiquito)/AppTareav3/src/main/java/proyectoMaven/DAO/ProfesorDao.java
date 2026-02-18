@@ -3,7 +3,6 @@ package proyectoMaven.DAO;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
-import proyectoMaven.Models.Alumno;
 import proyectoMaven.Models.Profesor;
 
 public class ProfesorDao {

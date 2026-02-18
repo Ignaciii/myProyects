@@ -24,7 +24,7 @@ public class Materia {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigoMateria")
     private int codigoMateria;
 

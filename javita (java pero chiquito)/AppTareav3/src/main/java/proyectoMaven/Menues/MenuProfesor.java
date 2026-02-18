@@ -118,6 +118,7 @@ public class MenuProfesor {
             int codigoMateria = scanner.nextInt();
             Materia materia = repositorioMateria.getMaterias().stream()
                     .filter(m -> m.getCodigoMateria() == codigoMateria).findFirst().orElse(null);
+            System.out.println(repositorioProfesor.mostrarProfesores());
             System.out.print("Ingrese la matricula del profesor al cual asignar la materia:");
             int matricula = scanner.nextInt();
             Profesor profesor = repositorioProfesor.getProfesores().stream()
