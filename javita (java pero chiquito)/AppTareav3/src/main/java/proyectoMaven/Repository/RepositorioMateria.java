@@ -1,7 +1,6 @@
 package proyectoMaven.Repository;
 
 import proyectoMaven.DAO.MateriaDao;
-import proyectoMaven.Models.Alumno;
 import proyectoMaven.Models.Materia;
 import java.util.List;
 

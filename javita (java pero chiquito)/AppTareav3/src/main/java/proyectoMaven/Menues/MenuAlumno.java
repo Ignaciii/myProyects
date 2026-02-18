@@ -26,30 +26,38 @@ public class MenuAlumno {
         String str = "----------------------------------------------------------------";
 
         while (opcion != 5) {
-            System.out.println(str);
-            Menu();
-            System.out.println(str);
-            System.out.print("Ingrese una opcion: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcion) {
-                case 1:
-                    mostrarAlumnos();
-                    break;
+            try {
+                System.out.println(str);
+                Menu();
+                System.out.println(str);
+                System.out.print("Ingrese una opcion: ");
+                opcion = scanner.nextInt();
+                scanner.nextLine();
+                switch (opcion) {
+                    case 1:
+                        mostrarAlumnos();
+                        break;
 
-                case 2:
-                    cargarAlumnos();
-                    break;
+                    case 2:
+                        cargarAlumnos();
+                        break;
 
-                case 3:
-                    borrarAlumno();
+                    case 3:
+                        borrarAlumno();
 
-                    break;
+                        break;
 
-                case 4:
-                    inscribirEnMateria();
-                    break;
+                    case 4:
+                        inscribirEnMateria();
+                        break;
 
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Upa parece que ingresaste un valor invalido!!!");
+                System.out.println("Se anulo la carga que estabas haciendo, volve a intentarlo!!!");
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+                scanner.nextLine();
             }
         }
     }
@@ -67,42 +75,36 @@ public class MenuAlumno {
 
     public void cargarAlumnos() {
 
-        try {
-            System.out.print("\nCuantos alumnos desea cargar: ");
-            int cantidad = scanner.nextInt();
+        System.out.print("\nCuantos alumnos desea cargar: ");
+        int cantidad = scanner.nextInt();
+        scanner.nextLine();
+        for (int i = 0; i < cantidad; i++) {
+            System.out.print("Ingrese los datos del alumno " + (i + 1));
+            System.out.print("\tLegajo: ");
+            int legajo = scanner.nextInt();
             scanner.nextLine();
-            for (int i = 0; i < cantidad; i++) {
-                System.out.print("Ingrese los datos del alumno " + (i + 1));
-                System.out.print("\tLegajo: ");
-                int legajo = scanner.nextInt();
+            if (repositorioAlumno.repetido(legajo)) {
+                System.out.println("\nNo se puede cargar dos veces el mismo alumno!!!!\n");
+                i = i - 1;
+            } else {
                 scanner.nextLine();
-                if (repositorioAlumno.repetido(legajo)) {
-                    System.out.println("\nNo se puede cargar dos veces el mismo alumno!!!!\n");
-                    i = i - 1;
+                System.out.print("Nombre y Apellido: ");
+                String nombre = scanner.nextLine();
+                System.out.print("Ingrese nota del primer parcial: ");
+                Double parcial1 = scanner.nextDouble();
+                System.out.print("Ingrese nota del segundo parcial: ");
+                Double parcial2 = scanner.nextDouble();
+
+                Alumno alumno = new Alumno(nombre, legajo, parcial1, parcial2);
+                if (repositorioAlumno.agregarAlumno(alumno)) {
+                    System.out.println("Alumno creado con exito.");
                 } else {
-                    scanner.nextLine();
-                    System.out.print("Nombre y Apellido: ");
-                    String nombre = scanner.nextLine();
-                    System.out.print("Ingrese nota del primer parcial: ");
-                    Double parcial1 = scanner.nextDouble();
-                    System.out.print("Ingrese nota del segundo parcial: ");
-                    Double parcial2 = scanner.nextDouble();
-
-                    Alumno alumno = new Alumno(nombre, legajo, parcial1, parcial2);
-                    if (repositorioAlumno.agregarAlumno(alumno)) {
-                        System.out.println("Alumno creado con exito.");
-                    } else {
-                        System.out.println("Oops algo salio mal en la creacion!!");
-                    }
-
-                    System.out.println();
-                    scanner.nextLine();
+                    System.out.println("Oops algo salio mal en la creacion!!");
                 }
-            }
 
-        } catch (InputMismatchException exception) {
-            System.out.println("Error: " + exception.getMessage());
-            exception.printStackTrace();
+                System.out.println();
+                scanner.nextLine();
+            }
         }
 
     }
@@ -118,6 +120,7 @@ public class MenuAlumno {
         } else {
             System.out.println("No se pudo borrar el alumno!!!");
         }
+
     }
 
     public void mostrarAlumnos() {
@@ -141,7 +144,8 @@ public class MenuAlumno {
         System.out.print("Ingrese el legajo del alumno a inscribir: ");
         int legajo = scanner.nextInt();
         scanner.nextLine();
-        Alumno alumno = repositorioAlumno.getListadoAlumnos().stream().filter(a -> a.getLegajo() == legajo).findFirst()
+        Alumno alumno = repositorioAlumno.getListadoAlumnos().stream().filter(a -> a.getLegajo() == legajo)
+                .findFirst()
                 .orElse(null);
         if (alumno == null) {
             System.out.println("Error alumno no encontrado");

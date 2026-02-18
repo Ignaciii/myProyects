@@ -23,33 +23,40 @@ public class MenuComision {
     public void iniciarMenu() {
         int opcion = -1;
         String str = "----------------------------------------------------------------";
+        try {
+            while (opcion != 5) {
+                System.out.println(str);
+                Menu();
+                System.out.println(str);
+                System.out.print("Ingrese una opcion: ");
+                opcion = scanner.nextInt();
+                scanner.nextLine();
+                switch (opcion) {
+                    case 1:
+                        mostrarComisiones();
+                        break;
 
-        while (opcion != 5) {
-            System.out.println(str);
-            Menu();
-            System.out.println(str);
-            System.out.print("Ingrese una opcion: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcion) {
-                case 1:
-                    mostrarComisiones();
-                    break;
+                    case 2:
+                        cargarComision();
+                        break;
 
-                case 2:
-                    cargarComision();
-                    break;
+                    case 3:
+                        borrarComision();
 
-                case 3:
-                    borrarComision();
+                        break;
 
-                    break;
+                    case 4:
+                        asignarMateriaComision();
+                        break;
 
-                case 4:
-                    asignarMateriaComision();
-                    break;
-
+                }
             }
+        } catch (InputMismatchException e) {
+            System.out.println("Upa parece que ingresaste un valor invalido!!!");
+            System.out.println("Se anulo la carga que estabas haciendo, volve a intentarlo!!!");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            scanner.nextLine();
         }
 
     }
@@ -68,78 +75,65 @@ public class MenuComision {
     }
 
     public void cargarComision() {
-        try {
-            System.out.print("Ingrese el nombre (ej K7): ");
-            String nombre = scanner.nextLine();
-            System.out.print("Ingrese a que año pertenece (1-5): ");
-            int año = scanner.nextInt();
-            scanner.nextLine();
-            if (repositorioComision.agregarComision(new Comision(nombre, año))) {
-                System.out.println("Comision creada exitosamente!!!");
-                return;
-            }
-            System.out.println("Oops, la comision no se pudo crear");
 
-        } catch (InputMismatchException e) {
-            System.out.println("Error, se ingreso un valor erroneo: " + e.getMessage());
-            e.printStackTrace();
+        System.out.print("Ingrese el nombre (ej K7): ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese a que año pertenece (1-5): ");
+        int año = scanner.nextInt();
+        scanner.nextLine();
+        if (repositorioComision.agregarComision(new Comision(nombre, año))) {
+            System.out.println("Comision creada exitosamente!!!");
+            return;
         }
+        System.out.println("Oops, la comision no se pudo crear");
 
     }
 
     public void borrarComision() {
-        try {
-            mostrarComisiones();
-            System.out.print("Ingrese el Id de la comision a borrar: ");
-            int comisionBorrar = scanner.nextInt();
-            scanner.nextLine();
-            if (repositorioComision.borrarComision(comisionBorrar)) {
-                System.out.println("Borrado exitoso!!");
-                return;
-            }
-            System.out.println("Oops, no se pudo completar el borrado!!!");
-        } catch (InputMismatchException e) {
-            System.out.println("Error al borrar la comision: " + e.getMessage());
-            e.printStackTrace();
+
+        mostrarComisiones();
+        System.out.print("Ingrese el Id de la comision a borrar: ");
+        int comisionBorrar = scanner.nextInt();
+        scanner.nextLine();
+        if (repositorioComision.borrarComision(comisionBorrar)) {
+            System.out.println("Borrado exitoso!!");
+            return;
         }
+        System.out.println("Oops, no se pudo completar el borrado!!!");
 
     }
 
     public void asignarMateriaComision() {
-        try {
-            System.out.println(repositorioMateria.mostrarMaterias());
-            System.out.print("Ingrese el codigo de la materia a asignar: ");
-            int codigoMateria = scanner.nextInt();
-            scanner.nextLine();
-            Materia materia = repositorioMateria.getMaterias().stream()
-                    .filter(m -> m.getCodigoMateria() == codigoMateria).findFirst().orElse(null);
-            if (materia == null) {
-                System.out.println("Oops no se encontro esa materia");
-                return;
-            }
 
-            mostrarComisiones();
-            System.out.print("Ingrese el id de la comision a la cual asignar la materia:");
-            int idComision = scanner.nextInt();
-            scanner.nextLine();
-            Comision comision = repositorioComision.getListadoComisiones().stream().filter(c -> c.getId() == idComision)
-                    .findFirst().orElse(null);
-            if (comision == null) {
-                System.out.println("Oops no se encontro la comision");
-                return;
-            }
-            if (comision.agregarMateria(materia)) {
-                if (repositorioMateria.actualizarMateria(materia)) {
-                    System.out.println("Se agrego la materia exitosamente!!!");
-                    return;
-                }
-
-            }
-            System.out.println("Oops, error al asignar la materia a la comision!!!");
-        } catch (InputMismatchException e) {
-            System.out.println("Error, se ingreso un valor erroneo: " + e.getMessage());
-            e.printStackTrace();
+        System.out.println(repositorioMateria.mostrarMaterias());
+        System.out.print("Ingrese el codigo de la materia a asignar: ");
+        int codigoMateria = scanner.nextInt();
+        scanner.nextLine();
+        Materia materia = repositorioMateria.getMaterias().stream()
+                .filter(m -> m.getCodigoMateria() == codigoMateria).findFirst().orElse(null);
+        if (materia == null) {
+            System.out.println("Oops no se encontro esa materia");
+            return;
         }
+
+        mostrarComisiones();
+        System.out.print("Ingrese el id de la comision a la cual asignar la materia:");
+        int idComision = scanner.nextInt();
+        scanner.nextLine();
+        Comision comision = repositorioComision.getListadoComisiones().stream().filter(c -> c.getId() == idComision)
+                .findFirst().orElse(null);
+        if (comision == null) {
+            System.out.println("Oops no se encontro la comision");
+            return;
+        }
+        if (comision.agregarMateria(materia)) {
+            if (repositorioMateria.actualizarMateria(materia)) {
+                System.out.println("Se agrego la materia exitosamente!!!");
+                return;
+            }
+
+        }
+        System.out.println("Oops, error al asignar la materia a la comision!!!");
 
     }
 }

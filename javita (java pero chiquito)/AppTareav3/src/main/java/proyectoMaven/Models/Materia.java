@@ -1,6 +1,5 @@
 package proyectoMaven.Models;
 
-import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
 
