@@ -80,6 +80,12 @@ public class MenuComision {
         String nombre = scanner.nextLine();
         System.out.print("Ingrese a que año pertenece (1-5): ");
         int año = scanner.nextInt();
+        while (año < 1 || año > 5) {
+            System.out.print("Upa parece que ingresaste un año invalido, intentalo con uno distinto: ");
+            año = scanner.nextInt();
+
+        }
+
         scanner.nextLine();
         if (repositorioComision.agregarComision(new Comision(nombre, año))) {
             System.out.println("Comision creada exitosamente!!!");
