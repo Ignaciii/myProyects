@@ -82,7 +82,7 @@ public class MenuAlumno {
             System.out.print("Ingrese los datos del alumno " + (i + 1));
             System.out.print("\tLegajo: ");
             int legajo = scanner.nextInt();
-            scanner.nextLine();
+
             if (repositorioAlumno.repetido(legajo)) {
                 System.out.println("\nNo se puede cargar dos veces el mismo alumno!!!!\n");
                 i = i - 1;
@@ -117,9 +117,10 @@ public class MenuAlumno {
         scanner.nextLine();
         if (repositorioAlumno.borrarAlumno(legajoBorrar)) {
             System.out.println("Borrado exitoso!!!");
-        } else {
-            System.out.println("No se pudo borrar el alumno!!!");
+            return;
         }
+
+        System.out.println("No se pudo borrar el alumno!!!");
 
     }
 

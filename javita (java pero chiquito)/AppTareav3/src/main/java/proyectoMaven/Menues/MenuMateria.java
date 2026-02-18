@@ -101,11 +101,11 @@ public class MenuMateria {
         System.out.print("Ingrese la codigo de materia a borrar: ");
         int materiaBorrar = scanner.nextInt();
         scanner.nextLine();
-        if (repositorioMateria.eliminarMateria(materiaBorrar)) {
+        if (repositorioMateria.borrarMateria(materiaBorrar)) {
             System.out.println("Borrado exitoso!!");
             return;
         }
-        System.out.println("Oops, no se pudo completar el borrado!!!");
+        System.out.println("No se pudo borrar la materia!!!");
 
     }
 

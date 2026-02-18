@@ -24,8 +24,9 @@ public class RepositorioProfesor {
 
     public Boolean borrarProfesor(int numeroMatricula) {
         if (profesorDao.cambiarEstadoProfesorDao(numeroMatricula)) {
-            profesores.removeIf(p -> p.getNumeroMatricula() == numeroMatricula);
-            return true;
+            if (profesores.removeIf(p -> p.getNumeroMatricula() == numeroMatricula))
+                return true;
+            return false;
         }
         return false;
     }

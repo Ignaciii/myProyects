@@ -40,8 +40,10 @@ public class RepositorioAlumno {
 
     public Boolean borrarAlumno(int legajo) {
         if (alumnoDAO.cambiarEstadoAlumnoDAO(legajo)) {
-            alumnos.removeIf(a -> a.getLegajo() == legajo);
-            return true;
+
+            if (alumnos.removeIf(a -> a.getLegajo() == legajo))
+                return true;
+            return false;
 
         }
         return false;

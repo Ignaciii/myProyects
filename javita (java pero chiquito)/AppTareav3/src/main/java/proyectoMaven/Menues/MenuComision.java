@@ -105,7 +105,7 @@ public class MenuComision {
             System.out.println("Borrado exitoso!!");
             return;
         }
-        System.out.println("Oops, no se pudo completar el borrado!!!");
+        System.out.println("No se pudo borrar la comision!!!");
 
     }
 

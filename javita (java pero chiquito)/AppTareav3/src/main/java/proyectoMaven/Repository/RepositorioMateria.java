@@ -24,10 +24,11 @@ public class RepositorioMateria {
 
     }
 
-    public Boolean eliminarMateria(int codigoMateria) {
+    public Boolean borrarMateria(int codigoMateria) {
         if (materiaDao.cambiarEstadoMateriaDAO(codigoMateria)) {
-            materias.removeIf(c -> c.getCodigoMateria() == codigoMateria);
-            return true;
+            if (materias.removeIf(c -> c.getCodigoMateria() == codigoMateria))
+                return true;
+            return false;
         }
         return false;
     }

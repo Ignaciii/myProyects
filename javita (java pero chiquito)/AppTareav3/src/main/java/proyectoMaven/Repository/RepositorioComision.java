@@ -26,8 +26,9 @@ public class RepositorioComision {
 
     public Boolean borrarComision(int id) {
         if (comisionDao.cambiarEstadoComisionDao(id)) {
-            comisiones.removeIf(c -> c.getId() == id);
-            return true;
+            if (comisiones.removeIf(c -> c.getId() == id))
+                return true;
+            return false;
         }
         return false;
     }
