@@ -55,8 +55,8 @@ public class MenuMateria {
     public void Menu() {
         System.out.println("Gestor de materias");
         System.out.println("Opcion 1) Mostrar materias");
-        System.out.println("Opcion 2) Agregar una materia");
-        System.out.println("Opcion 3) Eliminar una materia");
+        System.out.println("Opcion 2) Agregar materia");
+        System.out.println("Opcion 3) Eliminar materia");
         System.out.println("Opcion 4) Asignar a una Comision");
         System.out.println("Opcion 5) Volver atras");
     }
@@ -80,7 +80,7 @@ public class MenuMateria {
             }
 
             if (repositorioMateria.agregarMateria(new Materia(troncal, duracion, nombre))) {
-                System.out.println("Materia cargado exitosamente!!!");
+                System.out.println("Materia cargada exitosamente!!!");
                 return;
             }
             System.out.println("Oops, la materia no se pudo cargar");
@@ -104,7 +104,7 @@ public class MenuMateria {
             }
             System.out.println("Oops, no se pudo completar el borrado!!!");
         } catch (InputMismatchException e) {
-            System.out.println("Error al borrar al profesor: " + e.getMessage());
+            System.out.println("Error al borrar la materia: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -115,16 +115,28 @@ public class MenuMateria {
             System.out.println(repositorioComision.mostrarListadoComisiones());
             System.out.print("Ingrese el id de la comision a asignar: ");
             int idComision = scanner.nextInt();
+            scanner.nextLine();
             Comision comision = repositorioComision.getListadoComisiones().stream()
                     .filter(c -> c.getId() == idComision).findFirst().orElse(null);
-            System.out.println(repositorioMateria.mostrarMaterias());
+
+            if (comision == null) {
+                System.out.println("Oops no encontramos esa comision");
+                return;
+            }
+            mostrarMaterias();
             System.out.print("Ingrese el codigo de la materia:");
             int codigoMateria = scanner.nextInt();
+            scanner.nextLine();
             Materia materia = repositorioMateria.getMaterias().stream()
                     .filter(m -> m.getCodigoMateria() == codigoMateria)
                     .findFirst().orElse(null);
             scanner.nextLine();
-            if (comision != null && materia != null && comision.agregarMateria(materia)) {
+            if (materia == null) {
+                System.out.println("Oops no encontramos esa materia");
+                return;
+            }
+
+            if (comision.agregarMateria(materia)) {
                 if (repositorioMateria.actualizarMateria(materia)) {
                     System.out.println("Se asigno la comision exitosamente!!!");
                     return;

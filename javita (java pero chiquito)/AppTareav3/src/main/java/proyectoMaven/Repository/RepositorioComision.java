@@ -38,10 +38,13 @@ public class RepositorioComision {
 
     public String mostrarListadoComisiones() {
         StringBuilder sb = new StringBuilder();
-        for (Comision c : comisiones) {
-            sb.append(c.toString()).append("\n");
+        if (!comisiones.isEmpty()) {
+            for (Comision c : comisiones) {
+                sb.append(c.toString()).append("\n");
+            }
+            return sb.toString();
         }
-        return sb.toString();
+        return "No hay comisiones cargadas aun!!!";
     }
 
 }

@@ -33,7 +33,7 @@ public class MenuProfesor {
 
             switch (opcion) {
                 case 1:
-                    mostrarProfesor();
+                    mostrarProfesores();
                     break;
                 case 2:
                     cargarProfesor();
@@ -53,13 +53,13 @@ public class MenuProfesor {
     public void Menu() {
         System.out.println("Gestor de profesores");
         System.out.println("Opcion 1) Mostrar profesores");
-        System.out.println("Opcion 2) Agregar un profesor");
-        System.out.println("Opcion 3) Eliminar un profesor");
+        System.out.println("Opcion 2) Agregar profesor");
+        System.out.println("Opcion 3) Eliminar profesor");
         System.out.println("Opcion 4) Asignar una Materia");
         System.out.println("Opcion 5) Volver atras");
     }
 
-    public void mostrarProfesor() {
+    public void mostrarProfesores() {
         System.out.println(repositorioProfesor.mostrarProfesores());
     }
 
@@ -95,7 +95,7 @@ public class MenuProfesor {
 
     public void borrarProfesor() {
         try {
-            mostrarProfesor();
+            mostrarProfesores();
             System.out.print("Ingrese la matricula del profesor a borrar: ");
             int profesorBorrar = scanner.nextInt();
             scanner.nextLine();
@@ -116,16 +116,26 @@ public class MenuProfesor {
             System.out.println(repositorioMateria.mostrarMaterias());
             System.out.print("Ingrese el codigo de la materia a asignar: ");
             int codigoMateria = scanner.nextInt();
+            scanner.nextLine();
             Materia materia = repositorioMateria.getMaterias().stream()
                     .filter(m -> m.getCodigoMateria() == codigoMateria).findFirst().orElse(null);
-            System.out.println(repositorioProfesor.mostrarProfesores());
+            if (materia == null) {
+                System.out.println("Oops materia no encontrada");
+                return;
+            }
+            mostrarProfesores();
             System.out.print("Ingrese la matricula del profesor al cual asignar la materia:");
             int matricula = scanner.nextInt();
+            scanner.nextLine();
             Profesor profesor = repositorioProfesor.getProfesores().stream()
                     .filter(c -> c.getNumeroMatricula() == matricula)
                     .findFirst().orElse(null);
             scanner.nextLine();
-            if (profesor != null && materia != null && profesor.agregarMateria(materia)) {
+            if (profesor == null) {
+                System.out.println("Oops profesor no encontrado");
+                return;
+            }
+            if (profesor.agregarMateria(materia)) {
                 if (repositorioProfesor.actualizarProfesor(profesor)) {
                     System.out.println("Se asigno la materia exitosamente!!!");
                     return;

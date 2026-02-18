@@ -31,6 +31,7 @@ public class MenuAlumno {
             System.out.println(str);
             System.out.print("Ingrese una opcion: ");
             opcion = scanner.nextInt();
+            scanner.nextLine();
             switch (opcion) {
                 case 1:
                     mostrarAlumnos();
@@ -69,10 +70,12 @@ public class MenuAlumno {
         try {
             System.out.print("\nCuantos alumnos desea cargar: ");
             int cantidad = scanner.nextInt();
+            scanner.nextLine();
             for (int i = 0; i < cantidad; i++) {
                 System.out.print("Ingrese los datos del alumno " + (i + 1));
                 System.out.print("\tLegajo: ");
                 int legajo = scanner.nextInt();
+                scanner.nextLine();
                 if (repositorioAlumno.repetido(legajo)) {
                     System.out.println("\nNo se puede cargar dos veces el mismo alumno!!!!\n");
                     i = i - 1;
@@ -109,6 +112,7 @@ public class MenuAlumno {
         mostrarAlumnos();
         System.out.print("Ingrese el legajo del alumno a borrar: ");
         int legajoBorrar = scanner.nextInt();
+        scanner.nextLine();
         if (repositorioAlumno.borrarAlumno(legajoBorrar)) {
             System.out.println("Borrado exitoso!!!");
         } else {
@@ -121,11 +125,11 @@ public class MenuAlumno {
     }
 
     public void inscribirEnMateria() {
-        for (Materia m : repositorioMateria.getMaterias()) {
-            System.out.println("Codigo de materia: " + m.getCodigoMateria() + "| Nombre: " + m.getNombre());
-        }
+
+        System.out.println(repositorioMateria.mostrarMaterias());
         System.out.print("Ingrese el codigo de la materia: ");
         int codigoMateria = scanner.nextInt();
+        scanner.nextLine();
         Materia materia = repositorioMateria.getMaterias().stream()
                 .filter(m -> m.getCodigoMateria() == codigoMateria).findFirst().orElse(null);
         if (materia == null) {
@@ -136,6 +140,7 @@ public class MenuAlumno {
         mostrarAlumnos();
         System.out.print("Ingrese el legajo del alumno a inscribir: ");
         int legajo = scanner.nextInt();
+        scanner.nextLine();
         Alumno alumno = repositorioAlumno.getListadoAlumnos().stream().filter(a -> a.getLegajo() == legajo).findFirst()
                 .orElse(null);
         if (alumno == null) {

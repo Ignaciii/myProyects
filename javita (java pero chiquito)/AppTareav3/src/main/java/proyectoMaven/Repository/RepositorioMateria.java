@@ -38,11 +38,14 @@ public class RepositorioMateria {
     }
 
     public String mostrarMaterias() {
-        StringBuilder sb = new StringBuilder();
-        for (Materia m : materias) {
-            sb.append(m.toString()).append("\n");
+        if (!materias.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (Materia m : materias) {
+                sb.append(m.toString()).append("\n");
+            }
+            return sb.toString();
         }
-        return sb.toString();
+        return "No hay materias cargadas aun!!!";
     }
 
     public Boolean actualizarMateria(Materia materia) {

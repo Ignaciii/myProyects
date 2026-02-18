@@ -35,11 +35,14 @@ public class RepositorioProfesor {
     }
 
     public String mostrarProfesores() {
-        StringBuilder sb = new StringBuilder();
-        for (Profesor p : profesores) {
-            sb.append(p.toString()).append("\n");
+        if (!profesores.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (Profesor p : profesores) {
+                sb.append(p.toString()).append("\n");
+            }
+            return sb.toString();
         }
-        return sb.toString();
+        return "No hay profesores cargados aun!!!";
     }
 
     public Boolean actualizarProfesor(Profesor profesor) {
