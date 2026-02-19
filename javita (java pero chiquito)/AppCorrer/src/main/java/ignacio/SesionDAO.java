@@ -1,82 +1,56 @@
 package ignacio;
 
-import java.sql.*;
-import java.sql.ResultSet;
 import java.util.List;
 
-import java.util.ArrayList;
+import jakarta.persistence.EntityManager;
 
 public class SesionDAO {
-    public SesionDAO(Connection conexion) {
-        this.conexion = conexion;
+    public SesionDAO(EntityManager em) {
+        this.em = em;
     }
 
-    private Connection conexion;
+    private EntityManager em;
 
-    public SesionEntrenamiento insertarEnBaseDeDatos(String terreno, Double distancia, Double duracionTotal) {
-        // CURDATE() pone la fecha de hoy automáticamente
+    public Boolean insertarEnBaseDeDatos(String terreno, Double distancia, Double duracionTotal) {
+        try {
+            em.getTransaction().begin();
+            em.persist(new SesionEntrenamiento(terreno, distancia, duracionTotal));
+            em.getTransaction().commit();
+            return true;
 
-        try (PreparedStatement pstmt = conexion
-                .prepareStatement("INSERT INTO sesiones (distancia, tiempo, terreno) VALUES (?, ?, ?)",
-                        Statement.RETURN_GENERATED_KEYS);) {
-            // Llenamos los '?' con los datos del objeto
-            pstmt.setDouble(1, distancia);
-            pstmt.setDouble(2, duracionTotal);
-            pstmt.setString(3, terreno);
-
-            pstmt.executeUpdate(); // ¡Gatillamos la inserción!
-
-            try (
-                    ResultSet rs = pstmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    int id = rs.getInt(1);
-                    System.out.println("[DB] Sesión guardada con éxito.");
-                    return new SesionEntrenamiento(id, terreno, distancia, duracionTotal);
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("[DB] Error al insertar datos: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return null;
-
     }
 
     public Boolean borrarDeBaseDeDatos(int id) {
-
-        try (PreparedStatement pstmt = conexion.prepareStatement("DELETE FROM sesiones WHERE id = ?");) {
-            pstmt.setInt(1, id);
-            int resultado = pstmt.executeUpdate();
-            if (resultado > 0) {
-                return true;
+        try {
+            em.getTransaction().begin();
+            SesionEntrenamiento sesion = em.find(SesionEntrenamiento.class, id);
+            if (sesion != null) {
+                em.remove(sesion);
             }
+            em.getTransaction().commit();
+            return true;
 
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
+
     }
 
-    public List<SesionEntrenamiento> mostrarDatos() {
-        String sql = "SELECT * FROM sesiones";
-        List<SesionEntrenamiento> lista = new ArrayList<>();
-        try (PreparedStatement pstmt = conexion.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+    public List<SesionEntrenamiento> getDatos() {
+        try {
 
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                Double distancia = rs.getDouble(2);
-                Double duracion = rs.getDouble(3);
-                String terreno = rs.getString(4);
-                SesionEntrenamiento sesionEntrenamiento = new SesionEntrenamiento(id, terreno, distancia, duracion);
-                lista.add(sesionEntrenamiento);
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            List<SesionEntrenamiento> sesiones = em
+                    .createQuery("SELECT s FROM SesionEntrenamiento s", SesionEntrenamiento.class)
+                    .getResultList();
+            return sesiones;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return lista;
     }
 }
-
-// pide la conexion en el main como paremetro para el metodo

@@ -1,23 +1,35 @@
 package ignacio;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Table(name = "Sesiones")
+@Entity
 public class SesionEntrenamiento {
-    public SesionEntrenamiento(int id, String terreno, Double distancia, Double duracionTotal) {
+    public SesionEntrenamiento(String terreno, Double distancia, Double duracionTotal) {
 
         this.terreno = terreno;
         this.distancia = distancia;
         this.duracionTotal = duracionTotal;
-        this.id = id;
 
     }
 
     public SesionEntrenamiento() {
     }
 
-    private String terreno;
-    private Double distancia;
-    private Double duracionTotal;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "terreno", nullable = false)
+    private String terreno;
+    @Column(name = "distancia", nullable = false)
+    private Double distancia;
+    @Column(name = "duracionTotal", nullable = false)
+    private Double duracionTotal;
 
     public int getNumeroSesion() {
         return id;
