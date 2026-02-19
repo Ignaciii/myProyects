@@ -1,11 +1,15 @@
 package ignacio;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import java.time.format.DateTimeFormatter;
 
 public class AppCorrer {
     public AppCorrer() {
@@ -75,7 +79,35 @@ public class AppCorrer {
             System.out.print("Oops, se ingreso una opcion invalida, ingrese una valida [llano / desnivel]: ");
             terreno = scanner.nextLine();
         }
-        SesionEntrenamiento sesion = new SesionEntrenamiento(terreno.toUpperCase(), distancia, duracionTotal);
+        System.out.print("Usamos la fecha de hoy [SI-NO]: ");
+        String eleccion = scanner.nextLine();
+        while (!eleccion.toLowerCase().equals("si") && !eleccion.toLowerCase().equals("no")) {
+            System.out.print("Ups, ingresaste una opcion invalida, proba con una de estas [SI-NO]: ");
+            eleccion = scanner.nextLine();
+        }
+        LocalDate fecha = null;
+        if (eleccion.toLowerCase().equals("si")) {
+            fecha = LocalDate.now();
+        } else {
+
+            Boolean valida = false;
+            while (!valida) {
+                System.out.print("Ok, ingrese la fecha (dd/mm/aaaa): ");
+                String fechaS = scanner.nextLine();
+
+                try {
+                    fecha = LocalDate.parse(fechaS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    valida = true;
+
+                } catch (Exception e) {
+                    System.out.println("Error, se ingreso una fecha en formato invalido.");
+
+                }
+            }
+
+        }
+
+        SesionEntrenamiento sesion = new SesionEntrenamiento(terreno.toUpperCase(), distancia, duracionTotal, fecha);
         if (repositorio.agregarSesion(sesion)) {
             System.out.println("Se cargo la sesion de forma exitosa!!!");
             return;

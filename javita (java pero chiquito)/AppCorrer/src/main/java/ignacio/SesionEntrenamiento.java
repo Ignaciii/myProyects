@@ -6,16 +6,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.format.DateTimeFormatter;
+
+import java.time.LocalDate;
 
 @Table(name = "Sesiones")
 @Entity
 public class SesionEntrenamiento {
-    public SesionEntrenamiento(String terreno, Double distancia, Double duracionTotal) {
+    public SesionEntrenamiento(String terreno, Double distancia, Double duracionTotal, LocalDate fecha) {
 
         this.terreno = terreno;
         this.distancia = distancia;
         this.duracionTotal = duracionTotal;
-
+        this.fecha = fecha;
     }
 
     public SesionEntrenamiento() {
@@ -31,6 +34,8 @@ public class SesionEntrenamiento {
     private Double distancia;
     @Column(name = "duracionTotal", nullable = false)
     private Double duracionTotal;
+    @Column(name = "fecha", nullable = false)
+    private LocalDate fecha;
 
     public int getNumeroSesion() {
         return id;
@@ -48,9 +53,15 @@ public class SesionEntrenamiento {
         return duracionTotal;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
     public String toString() {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaS = fecha.format(formato);
 
         return "Sesion: N" + id + " | Tipo de terreno: " + terreno + " | Distancia: " + distancia
-                + " | Duracion total: " + duracionTotal;
+                + " | Duracion total: " + duracionTotal + " minutos | Fecha: " + fechaS;
     }
 }
