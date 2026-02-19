@@ -59,22 +59,24 @@ public class AppCorrer {
     }
 
     public static void cargarSesiones(RepositorioSesiones repositorio, Scanner scanner) {
-        String terreno;
-        Double distancia, duracionTotal;
 
         // Actualizamos el mensaje para no confundir: ahora es con PUNTO
         System.out.println("Vamos a cargar una sesion ahora (usar valores con coma ej 11,4 km");
 
         System.out.print("distancia recorrida (km): ");
-        distancia = scanner.nextDouble();
+        Double distancia = scanner.nextDouble();
         System.out.print("duracion total de la sesion (en minutos): ");
-        duracionTotal = scanner.nextDouble();
+        Double duracionTotal = scanner.nextDouble();
 
-        scanner.nextLine(); // Limpiamos buffer
-        System.out.print("Tipo de terreno (llano / desnivel): ");
-        terreno = scanner.nextLine();
+        scanner.nextLine();
+        System.out.print("Tipo de terreno [llano / desnivel]: ");
+        String terreno = scanner.nextLine();
+        while (!terreno.toLowerCase().equals("llano") && !terreno.toLowerCase().equals("desnivel")) {
+            System.out.print("Oops, se ingreso una opcion invalida, ingrese una valida [llano / desnivel]: ");
+            terreno = scanner.nextLine();
+        }
 
-        repositorio.agregarSesion(terreno, distancia, duracionTotal);
+        repositorio.agregarSesion(terreno.toUpperCase(), distancia, duracionTotal);
 
     }
 

@@ -49,12 +49,7 @@ public class SesionEntrenamiento {
 
     public String toString() {
 
-        return "\n==============================================================" +
-                "\n  REPORTE DE SESIÓN Nº: " + id +
-                "\n==============================================================" +
-                "\n> Terreno: " + terreno +
-                "\n> Distancia: " + distancia + " km" +
-                "\n> Duración App: " + duracionTotal + " hs" +
-                "\n--------------------------------------------------------------";
+        return "Sesion: N" + id + " | Tipo de terreno: " + terreno + " | Distancia: " + distancia
+                + " | Duracion total: " + duracionTotal;
     }
 }
