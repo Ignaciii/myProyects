@@ -11,10 +11,10 @@ public class SesionDAO {
 
     private EntityManager em;
 
-    public Boolean insertarEnBaseDeDatos(String terreno, Double distancia, Double duracionTotal) {
+    public Boolean insertarEnBaseDeDatos(SesionEntrenamiento sesionEntrenamiento) {
         try {
             em.getTransaction().begin();
-            em.persist(new SesionEntrenamiento(terreno, distancia, duracionTotal));
+            em.persist(sesionEntrenamiento);
             em.getTransaction().commit();
             return true;
 

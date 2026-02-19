@@ -23,6 +23,7 @@ public class SesionEntrenamiento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     @Column(name = "terreno", nullable = false)
     private String terreno;

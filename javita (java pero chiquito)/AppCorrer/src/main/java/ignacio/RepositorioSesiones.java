@@ -1,5 +1,6 @@
 package ignacio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioSesiones {
@@ -7,16 +8,20 @@ public class RepositorioSesiones {
     public RepositorioSesiones(SesionDAO sesionDAO) {
         this.sesiones = sesionDAO.getDatos();
         this.sesionDAO = sesionDAO;
+        this.sesiones = (sesionDAO.getDatos() == null ? new ArrayList<>() : sesionDAO.getDatos());
 
     }
 
     private List<SesionEntrenamiento> sesiones;
     private SesionDAO sesionDAO;
 
-    public void agregarSesion(String terreno, Double distancia, Double duracionTotal) {
+    public Boolean agregarSesion(SesionEntrenamiento sesionEntrenamiento) {
 
-        if (sesionDAO.insertarEnBaseDeDatos(terreno, distancia, duracionTotal))
-            this.sesiones.add(new SesionEntrenamiento(terreno, distancia, duracionTotal));
+        if (sesionDAO.insertarEnBaseDeDatos(sesionEntrenamiento)) {
+            this.sesiones.add(sesionEntrenamiento);
+            return true;
+        }
+        return false;
 
     }
 
@@ -24,16 +29,16 @@ public class RepositorioSesiones {
         return sesiones.size();
     }
 
-    public void borrarSesion(int id) {
+    public Boolean borrarSesion(int id) {
         if (sesionDAO.borrarDeBaseDeDatos(id)) {
             Boolean resultado = sesiones.removeIf(s -> s.getNumeroSesion() == id);
             if (resultado) {
-                System.out.println("Borrado con exito!!!");
+                return true;
             } else {
-                System.out.println("Se borro con exito de la BD pero no estaba cargado en memoria!!!");
+                return false;
             }
         } else {
-            System.out.println("No se pudo borrar el elemento!!!");
+            return false;
         }
     }
 

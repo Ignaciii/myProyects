@@ -75,27 +75,48 @@ public class AppCorrer {
             System.out.print("Oops, se ingreso una opcion invalida, ingrese una valida [llano / desnivel]: ");
             terreno = scanner.nextLine();
         }
-
-        repositorio.agregarSesion(terreno.toUpperCase(), distancia, duracionTotal);
+        SesionEntrenamiento sesion = new SesionEntrenamiento(terreno.toUpperCase(), distancia, duracionTotal);
+        if (repositorio.agregarSesion(sesion)) {
+            System.out.println("Se cargo la sesion de forma exitosa!!!");
+            return;
+        }
+        System.out.println("No se pudo cargar la sesion, intentelo nuevamente");
 
     }
 
     public static void visualizarSesiones(RepositorioSesiones repositorio) {
-        if (repositorio.getSesiones() != null) {
-            for (SesionEntrenamiento s : repositorio.getSesiones()) {
-                System.out.println(s.toString());
-            }
-            System.out.println("Cantidad total de sesiones: " + repositorio.getCantidad());
-            return;
-        }
-        System.out.println("No hay sesiones cargadas!!!");
+        System.out.println(recorrerSesiones(repositorio));
+        System.out.println("Cantidad total de sesiones: " + repositorio.getCantidad());
+        return;
+
     }
 
     public static void borrarSesion(Scanner scanner, RepositorioSesiones repositorioSesiones) {
+        if (repositorioSesiones.getCantidad() == 0) {
+            System.out.println("No hay sesiones cargadas para borrar");
+            return;
+        }
+        System.out.println(recorrerSesiones(repositorioSesiones));
         System.out.print("Ingrese el numero de sesion que desea borrar: ");
         int idBorrar = scanner.nextInt();
         scanner.nextLine();
-        repositorioSesiones.borrarSesion(idBorrar);
+        if (repositorioSesiones.borrarSesion(idBorrar)) {
+            System.out.println("Borrado exitoso!!!");
+            return;
+        }
+        System.out.println("No se pudo encontrar el elemento!!!");
 
+    }
+
+    public static String recorrerSesiones(RepositorioSesiones repositorio) {
+        StringBuilder sb = new StringBuilder();
+        if (!repositorio.getSesiones().isEmpty()) {
+            for (SesionEntrenamiento s : repositorio.getSesiones()) {
+                sb.append(s.toString()).append("\n");
+            }
+            return sb.toString();
+
+        }
+        return "No se cargaron sesiones aun!!!";
     }
 }
