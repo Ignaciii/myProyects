@@ -79,13 +79,19 @@ public class MenuMateria {
         System.out.print("Ingrese el nombre: ");
         String nombre = scanner.nextLine();
         System.out.print("Ingrese la duracion [Anual-Cuatrimestral]: ");
-        String duracion = scanner.nextLine();
-        System.out.print("Es troncal [SI-NO]: ");
-        String respuesta = scanner.nextLine();
-        Boolean troncal = false;
-        if (respuesta.equals("SI")) {
-            troncal = true;
+        String duracion = scanner.nextLine().toUpperCase();
+        while (!duracion.equals("CUATRIMESTRAL") && !duracion.equals("ANUAL")) {
+            System.out.print("Se ingreso una duracion invalida, ingresa una valida [Anual-Cuatrimestral]: ");
+            duracion = scanner.nextLine().toUpperCase();
         }
+        System.out.print("Es troncal [SI-NO]: ");
+        String respuesta = scanner.nextLine().toUpperCase();
+
+        while (!respuesta.equals("SI") && !respuesta.equals("NO")) {
+            System.out.print("Ingresaste una opcion invalida, ingresa una valida [SI-NO]: ");
+            respuesta = scanner.nextLine().toUpperCase();
+        }
+        Boolean troncal = (respuesta.equals("SI") ? true : false);
 
         if (repositorioMateria.agregarMateria(new Materia(troncal, duracion, nombre))) {
             System.out.println("Materia cargada exitosamente!!!");
