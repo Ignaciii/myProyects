@@ -1,5 +1,4 @@
-C:\Users\Administrador\Desktop\programacion\myProyects\javita (java pero chiquito)\AppCorrer\src\main\java\ignacio\AppCorrer.java
-C:\Users\Administrador\Desktop\programacion\myProyects\javita (java pero chiquito)\AppCorrer\src\main\java\ignacio\MenuOpciones.java
-C:\Users\Administrador\Desktop\programacion\myProyects\javita (java pero chiquito)\AppCorrer\src\main\java\ignacio\RepositorioSesiones.java
-C:\Users\Administrador\Desktop\programacion\myProyects\javita (java pero chiquito)\AppCorrer\src\main\java\ignacio\SesionDAO.java
-C:\Users\Administrador\Desktop\programacion\myProyects\javita (java pero chiquito)\AppCorrer\src\main\java\ignacio\SesionEntrenamiento.java
+C:\Users\Administrador\Desktop\appCorrer\src\main\java\ignacio\appCorrer\AppCorrerApplication.java
+C:\Users\Administrador\Desktop\appCorrer\src\main\java\ignacio\appCorrer\Controllers\SesionController.java
+C:\Users\Administrador\Desktop\appCorrer\src\main\java\ignacio\appCorrer\Models\SesionEntrenamiento.java
+C:\Users\Administrador\Desktop\appCorrer\src\main\java\ignacio\appCorrer\Repositories\SesionRepository.java
